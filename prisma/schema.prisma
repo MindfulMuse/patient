@@ -1,0 +1,279 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String
+  email        String    @unique
+  hospitalname String?
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  updated_at   DateTime? @default(now()) @db.Timestamp(6)
+  Doctor       Doctor[]
+}
+
+model Diagnosis {
+  id                     Int            @id @default(autoincrement())
+  patient_id             String
+  medical_id             Int
+  doctor_id              String
+  symptoms               String
+  diagnosis              String
+  notes                  String?
+  prescribed_medications String?
+  follow_up_plan         String?
+  created_at             DateTime       @default(now())
+  updated_at             DateTime
+  Doctor                 Doctor         @relation(fields: [doctor_id], references: [id])
+  MedicalRecords         MedicalRecords @relation(fields: [medical_id], references: [id], onDelete: Cascade)
+}
+
+model Doctor {
+  id                  String        @id
+  email               String        @unique
+  name                String
+  specialization      String
+  license_number      String
+  phone               String
+  address             String
+  department          String?
+  img                 String?
+  colorCode           String?
+  availability_status String?
+  type                JOBTYPE       @default(FULL)
+  created_at          DateTime      @default(now())
+  updated_at          DateTime
+  Patient_email       String?
+  adminid             String?       @db.Uuid
+  Appointment         Appointment[]
+  Diagnosis           Diagnosis[]
+  Admin               Admin?        @relation(fields: [adminid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_admin")
+  Patient             Patient[]
+  WorkingDays         WorkingDays[]
+}
+
+model LabTest {
+  id             Int            @id @default(autoincrement())
+  record_id      Int
+  test_date      DateTime
+  result         String
+  status         String
+  notes          String?
+  service_id     Int            @unique
+  created_at     DateTime       @default(now())
+  updated_at     DateTime
+  MedicalRecords MedicalRecords @relation(fields: [record_id], references: [id], onDelete: Cascade)
+}
+
+model MedicalRecords {
+  id             Int         @id @default(autoincrement())
+  patient_id     String
+  appointment_id Int
+  doctor_id      String
+  treatment_plan String?
+  prescriptions  String?
+  lab_request    String?
+  notes          String?
+  created_at     DateTime    @default(now())
+  updated_at     DateTime
+  Diagnosis      Diagnosis[]
+  LabTest        LabTest[]
+  Patient        Patient     @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+}
+
+model Patient {
+  id                       String            @id
+  first_name               String
+  last_name                String
+  date_of_birth            DateTime
+  address                  String?
+  email                    String            @unique
+  admission_reason         String?           @db.VarChar(255)
+  allergies                String?
+  blood_group              String
+  created_at               DateTime          @default(now())
+  doctorId                 String?
+  emergency_contact_name   String
+  emergency_contact_number String
+  gender                   Gender            @default(MALE)
+  img                      String?
+  last_admission_date      DateTime?         @db.Date
+  last_admitted_hospital   String?           @db.VarChar(255)
+  marital_status           String?
+  medical_conditions       String
+  medical_consent          Boolean
+  medical_history          String?
+  phone                    String
+  privacy_consent          Boolean
+  relation                 String
+  service_consent          Boolean
+  updated_at               DateTime
+  Appointment              Appointment[]
+  MedicalRecords           MedicalRecords[]
+  NurseAssignment          NurseAssignment[]
+  Doctor                   Doctor?           @relation(fields: [doctorId], references: [id], onDelete: NoAction)
+  Prescription             Prescription[]
+  VitalSigns               VitalSigns[]
+
+  @@index([doctorId])
+}
+
+model Prescription {
+  id                    Int          @id @default(autoincrement())
+  patientid             String
+  date                  DateTime?    @default(now()) @db.Timestamp(6)
+  instructions          String?
+  next_appointment_date DateTime?    @db.Timestamp(6)
+  next_appointment_time String?      @db.VarChar(255)
+  appointmentid         String?      @db.Uuid
+  Patient               Patient      @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  Appointment           Appointment? @relation(fields: [appointmentid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_prescription_appointment")
+  medication            medication[]
+}
+
+model Staff {
+  id             String   @id
+  email          String   @unique
+  name           String
+  phone          String
+  address        String
+  department     String?
+  img            String?
+  license_number String?
+  colorCode      String?
+  role           Role
+  status         Status   @default(ACTIVE)
+  created_at     DateTime @default(now())
+  updated_at     DateTime
+}
+
+model VitalSigns {
+  id                Int      @id @default(autoincrement())
+  patient_id        String
+  body_temperature  Float
+  heart_rate        Int
+  respiratory_rate  Int?
+  oxygen_saturation Int?
+  activity_level    String?
+  blood_pressure    Float
+  height            Float
+  created_at        DateTime @default(now())
+  updated_at        DateTime
+  sbp               Int?
+  dbp               Int?
+  ri                Int?
+  si                Int?
+  pi                Int?
+  Patient           Patient  @relation(fields: [patient_id], references: [id])
+}
+
+model WorkingDays {
+  id         Int      @id @default(autoincrement())
+  doctor_id  String
+  day        String
+  start_time String
+  close_time String
+  created_at DateTime @default(now())
+  updated_at DateTime
+  Doctor     Doctor   @relation(fields: [doctor_id], references: [id], onDelete: Cascade)
+}
+
+model medication {
+  id             Int          @id @default(autoincrement())
+  prescriptionid Int
+  email          String
+  name           String       @db.VarChar(255)
+  dosage         String       @db.VarChar(255)
+  timing         String[]
+  custom         Boolean?     @default(false)
+  form           Form
+  Prescription   Prescription @relation(fields: [prescriptionid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model playing_with_neon {
+  id    Int    @id @default(autoincrement())
+  name  String
+  value Float? @db.Real
+}
+
+model Nurse {
+  id              String            @id @db.VarChar(255)
+  name            String            @db.VarChar(255)
+  email           String            @unique @db.VarChar(255)
+  phone           String?           @db.VarChar(50)
+  created_at      DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  NurseAssignment NurseAssignment[]
+}
+
+model NurseAssignment {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nurseid   String   @db.VarChar(255)
+  patientid String   @db.VarChar(255)
+  starttime DateTime @db.Timestamp(6)
+  endtime   DateTime @db.Timestamp(6)
+  Nurse     Nurse    @relation(fields: [nurseid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_nurse")
+  Patient   Patient  @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_patient")
+}
+
+model Appointment {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  doctorid     String
+  patientid    String
+  date         DateTime       @db.Timestamp(6)
+  starttime    String         @db.VarChar
+  endtime      String         @db.VarChar
+  status       String         @default("BOOKED") @db.VarChar
+  created_at   DateTime       @default(now()) @db.Timestamp(6)
+  updated_at   DateTime       @default(now()) @db.Timestamp(6)
+  dphone       String?        @db.VarChar(50)
+  Doctor       Doctor         @relation(fields: [doctorid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_doctor")
+  Patient      Patient        @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_patient")
+  Prescription Prescription[]
+
+  @@unique([doctorid, date, starttime, endtime], map: "appointment_unique")
+}
+
+enum Form {
+  T
+  L
+  IV
+  S
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum JOBTYPE {
+  FULL
+  PART
+}
+
+enum Role {
+  NURSE
+  DOCTOR
+  LAB_TECHNICIAN
+  PALIENI
+  CASHIER
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  DORMANT
+}
+
+enum form {
+  L
+  T
+  IV
+  S
+}
