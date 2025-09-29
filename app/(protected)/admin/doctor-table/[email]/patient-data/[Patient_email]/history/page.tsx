@@ -22,10 +22,9 @@ export default async function Patient_History({
 }: {
   params: { email: string; Patient_email: string };
 }) {
-  const awaitedParams = await params;
-
-  const doctorEmail = decodeURIComponent(awaitedParams.email);
-  const patientEmail = decodeURIComponent(awaitedParams.Patient_email);
+  
+   const doctorEmail = decodeURIComponent(params.email);
+  const patientEmail = decodeURIComponent(params.Patient_email);
 
   const { email } = useParams();
   const [history, setHistory] = useState<AdmissionHistoryRecord[]>([]);
