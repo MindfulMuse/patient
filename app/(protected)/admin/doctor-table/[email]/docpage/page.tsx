@@ -30,8 +30,18 @@ type FormDataType = {
   phone: string;
   email:string;
 };
-export default function DocPage({ params }: { params: { email: string } }) {
-  const decodedEmail = decodeURIComponent(params.email);
+
+// export default function DocPage({ params }: { params: { email: string } }) {
+//   const decodedEmail = decodeURIComponent(params.email);
+
+export default function DocPage() {
+  const params = useParams();
+ const emailParam = params?.email;
+
+  // Ensure it's a string before decoding
+  const decodedEmail =
+    typeof emailParam === 'string' ? decodeURIComponent(emailParam) : '';
+
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [loading, setLoading] = useState(true);
   const [patients, setPatients] = useState<Patient[]>([]);
