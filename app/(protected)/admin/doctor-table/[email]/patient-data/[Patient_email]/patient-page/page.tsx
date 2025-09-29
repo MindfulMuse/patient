@@ -2,6 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
+import { useParams } from "next/navigation";
 
 import { StatCard } from "@/components/stat-card";
 import { Button } from "@/components/ui/button";
@@ -20,19 +21,24 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 // export default async function DoctorPatientView({
 //E:\Projects\patient monitor\patient monitor\my-app\app\(protected)\admin\doctor-table\[email]\patient-data\[Patient_email]\patient-page\page.tsx
-export default async function DoctorPatientView({
-  params,
-}: {
-  params: { email: string; Patient_email: string };
-}) {
-  // const awaitedParams = await params;
+// export default async function DoctorPatientView({
+//   params,
+// }: {
+//   params: { email: string; Patient_email: string };
+// }) {
+//   // const awaitedParams = await params;
 
-  // const doctorEmail = decodeURIComponent(awaitedParams.email);
-  // const patientEmail = decodeURIComponent(awaitedParams.Patient_email);
+//   // const doctorEmail = decodeURIComponent(awaitedParams.email);
+//   // const patientEmail = decodeURIComponent(awaitedParams.Patient_email);
 
-  const doctorEmail = decodeURIComponent(params.email);
-  const patientEmail = decodeURIComponent(params.Patient_email);
 
+export default async function Patient_History() {
+  const { Demail, Patient_email } = useParams<{ Demail: string; Patient_email: string }>();
+ 
+     const doctorEmail = decodeURIComponent(Demail);
+  const patientEmail = decodeURIComponent(Patient_email);
+  
+ 
 //   console.log("params.doctorEmail:", params.doctorEmail);
 // console.log("params.email:", params.email);
 console.log("doctorEmail:", doctorEmail);
