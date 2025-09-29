@@ -17,15 +17,24 @@ type AdmissionHistoryRecord = {
   medical_history: string;
 };
 
+// export default async function Patient_History({
+//   params,
+// }: {
+//   params: { email: string; Patient_email: string };
+// }) {
+  
+//    const doctorEmail = decodeURIComponent(params.email);
+//   const patientEmail = decodeURIComponent(params.Patient_email);
+
+
+
 export default async function Patient_History({
   params,
 }: {
   params: { email: string; Patient_email: string };
 }) {
-  
-   const doctorEmail = decodeURIComponent(params.email);
+  const doctorEmail = decodeURIComponent(params.email);
   const patientEmail = decodeURIComponent(params.Patient_email);
-
   const { email } = useParams();
   const [history, setHistory] = useState<AdmissionHistoryRecord[]>([]);
 
