@@ -41,19 +41,23 @@ const vitalOptions = [
   { key: "blood_pressure", label: "Blood Pressure (mmHg)" },
 ];
 
-export default async function DoctorPatientViewTrends({
-  params,
-}: {
-  params: { email: string; Patient_email: string };
-}) {
+// export default async function DoctorPatientViewTrends({
+//   params,
+// }: {
+//   params: { email: string; Patient_email: string };
+// }) {
   // const awaitedParams = await params;
 
   // const doctorEmail = decodeURIComponent(awaitedParams.email);
   // const patientEmail = decodeURIComponent(awaitedParams.Patient_email);
 
-  const doctorEmail = decodeURIComponent(params.email);
-  const patientEmail = decodeURIComponent(params.Patient_email);
-
+  export default async function Patient_History() {
+    const { Demail, Patient_email } = useParams<{ Demail: string; Patient_email: string }>();
+   
+    const doctorEmail = decodeURIComponent(Demail);
+    const patientEmail = decodeURIComponent(Patient_email);
+    
+   
   const [data, setData] = useState<VitalDataPoint[]>([]);
   const [selected, setSelected] = useState("body_temperature");
   const [dropdownOpen, setDropdownOpen] = useState(false);

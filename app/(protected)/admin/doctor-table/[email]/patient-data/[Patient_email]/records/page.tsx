@@ -18,20 +18,23 @@ type VitalsRecord = {
   respiratory_rate: number | null;
 };
 
-export default async function DoctorPatientViewRecords({
-  params,
-}: {
-  params: { email: string; Patient_email: string };
-}) {
+// export default async function DoctorPatientViewRecords({
+//   params,
+// }: {
+//   params: { email: string; Patient_email: string };
+// }) {
   // const awaitedParams = await params;
 
   // const doctorEmail = decodeURIComponent(awaitedParams.email);
   // const patientEmail = decodeURIComponent(awaitedParams.Patient_email);
 
-
-   const doctorEmail = decodeURIComponent(params.email);
-  const patientEmail = decodeURIComponent(params.Patient_email);
-
+export default async function Patient_History() {
+  const { Demail, Patient_email } = useParams<{ Demail: string; Patient_email: string }>();
+ 
+  const doctorEmail = decodeURIComponent(Demail);
+  const patientEmail = decodeURIComponent(Patient_email);
+  
+ 
   const { email } = useParams();
   const [data, setData] = useState<VitalsRecord[]>([]);
   const [search, setSearch] = useState("");
