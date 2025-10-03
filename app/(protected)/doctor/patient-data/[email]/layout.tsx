@@ -48,15 +48,30 @@
 import { ReactNode, useState } from "react";
 import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
 
+// export default function PatientLayout({
+//   children,
+//   params,
+// }: {
+//   children: ReactNode;
+//   params: { email: string };
+// }) {
+//   // const awaitparams=await params;
+//   const decodedEmail = decodeURIComponent(params.email);
+  
+
+
 export default function PatientLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: { email: string };
+  params: { email: string } | Promise<{ email: string }>;
 }) {
-  // const awaitparams=await params;
-  const decodedEmail = decodeURIComponent(params.email);
+  // Force TS to treat params as sync object (runtime gives a plain object)
+  const resolvedParams = params as { email: string };
+
+  const decodedEmail = decodeURIComponent(resolvedParams.email);
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
