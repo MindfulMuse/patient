@@ -59,6 +59,7 @@ import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
 //   const decodedEmail = decodeURIComponent(params.email);
   
 
+
 interface LayoutProps {
   children: ReactNode;
   params: Promise<{
@@ -66,12 +67,9 @@ interface LayoutProps {
   }>;
 }
 
-
 export default async function Layout({ children, params }: LayoutProps) {
   const { email } = await params;
-
   const decodedEmail = decodeURIComponent(email);
- 
 
   const [menuOpen, setMenuOpen] = useState(false);
 
