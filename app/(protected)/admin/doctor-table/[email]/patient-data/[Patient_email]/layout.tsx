@@ -57,6 +57,8 @@ interface LayoutProps {
   };
 }
 
+type params = Promise<{ slug: string }>
+
 export default async function Layout({ children, params }: LayoutProps) {
   const { email, Patient_email } = await params;
   const doctorEmail = decodeURIComponent(params.email);
