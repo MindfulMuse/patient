@@ -49,13 +49,27 @@
 import { ReactNode, useState } from "react";
 import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
 
+// interface LayoutProps {
+//   children: ReactNode;
+//   params: {
+//     email: string;
+//     Patient_email: string;
+//   };
+// }
+
 interface LayoutProps {
   children: ReactNode;
-  params: {
+  params: Promise<{
     email: string;
     Patient_email: string;
-  };
+  }>;
 }
+
+export default async function Layout({ children, params }: LayoutProps) {
+  const { email, Patient_email } = await params;
+
+  const doctorEmail = decodeURIComponent(email);
+  const patientEmail = decodeURIComponent(Patient_email);
 
 
 // export default async function Layout({ children, params }: LayoutProps) {
@@ -63,9 +77,9 @@ interface LayoutProps {
 //   const doctorEmail = decodeURIComponent(email);
 //   const patientEmail = decodeURIComponent(Patient_email);
 
-  export default function Layout({ children, params }: LayoutProps) {
-  const doctorEmail = decodeURIComponent(params.email);
-  const patientEmail = decodeURIComponent(params.Patient_email);
+  // export default function Layout({ children, params }: LayoutProps) {
+  // const doctorEmail = decodeURIComponent(params.email);
+  // const patientEmail = decodeURIComponent(params.Patient_email);
 
    
   console.log("doctmail",doctorEmail,"patient",patientEmail)
