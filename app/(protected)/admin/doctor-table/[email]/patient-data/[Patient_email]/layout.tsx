@@ -58,14 +58,14 @@ interface LayoutProps {
 }
 
 
-export default async function Layout({ children, params }: LayoutProps) {
-  const { email, Patient_email } = await params;
-  const doctorEmail = decodeURIComponent(email);
-  const patientEmail = decodeURIComponent(Patient_email);
+// export default async function Layout({ children, params }: LayoutProps) {
+//   const { email, Patient_email } = await params;
+//   const doctorEmail = decodeURIComponent(email);
+//   const patientEmail = decodeURIComponent(Patient_email);
 
-  // export default function Layout({ children, params }: LayoutProps) {
-  // const doctorEmail = decodeURIComponent(params.email);
-  // const patientEmail = decodeURIComponent(params.Patient_email);
+  export default function Layout({ children, params }: LayoutProps) {
+  const doctorEmail = decodeURIComponent(params.email);
+  const patientEmail = decodeURIComponent(params.Patient_email);
 
    
   console.log("doctmail",doctorEmail,"patient",patientEmail)
