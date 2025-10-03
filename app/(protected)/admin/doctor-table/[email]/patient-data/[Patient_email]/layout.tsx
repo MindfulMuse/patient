@@ -44,7 +44,6 @@
 // }
 
 //E:\Projects\patient-monitor\patient-monitor\my-app\app\(protected)\admin\doctor-table\[email]\patient-data\[Patient_email]\layout.tsx
-"use client"; // Important for layout to be interactive
 
 import { ReactNode, useState } from "react";
 import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
