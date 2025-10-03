@@ -50,9 +50,10 @@ import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
 
 
 
-export default function PatientLayout({ children, params }: { children: React.ReactNode, params: { email: string, Patient_email: string } }) {
-  const doctorEmail = decodeURIComponent(params.email);
-  const patientEmail = decodeURIComponent(params.Patient_email);
+export default async function PatientLayout({ children, params }: { children: React.ReactNode, params: { email: string, Patient_email: string } }) {
+  const defaultparams=await params;
+  const doctorEmail = decodeURIComponent(defaultparams.email);
+  const patientEmail = decodeURIComponent(defaultparams.Patient_email);
 
   console.log("doctmail",doctorEmail,"patient",patientEmail)
 
