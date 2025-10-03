@@ -44,6 +44,7 @@
 // }
 
 //E:\Projects\patient-monitor\patient-monitor\my-app\app\(protected)\admin\doctor-table\[email]\patient-data\[Patient_email]\layout.tsx
+"use client"; // Important for layout to be interactive
 
 import { ReactNode, useState } from "react";
 import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
@@ -56,14 +57,14 @@ interface LayoutProps {
   };
 }
 
-// export default function Layout({ children, params }: LayoutProps) {
-//   const { email, Patient_email } = params;
-//   const doctorEmail = decodeURIComponent(params.email);
-//   const patientEmail = decodeURIComponent(params.Patient_email);
-
-  export default function Layout({ children, params }: LayoutProps) {
+export default async function Layout({ children, params }: LayoutProps) {
+  const { email, Patient_email } = await params;
   const doctorEmail = decodeURIComponent(params.email);
   const patientEmail = decodeURIComponent(params.Patient_email);
+
+  // export default function Layout({ children, params }: LayoutProps) {
+  // const doctorEmail = decodeURIComponent(params.email);
+  // const patientEmail = decodeURIComponent(params.Patient_email);
 
    
   console.log("doctmail",doctorEmail,"patient",patientEmail)
