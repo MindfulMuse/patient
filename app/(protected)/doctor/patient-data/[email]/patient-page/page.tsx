@@ -38,7 +38,7 @@ interface LayoutProps {
 export default async function Layout({ children, params }: { children: ReactNode; params: { email: string } }) {
   // simulate async decoding
   const { email } = await Promise.resolve(params);
-  const decodedEmail = decodeURIComponent(email);
+  // const decodedEmail = decodeURIComponent(email);
 
 // const { sessionClaims } = await auth();
   // const doctorEmail = sessionClaims?.email as string;
@@ -52,9 +52,9 @@ export default async function Layout({ children, params }: { children: ReactNode
     return redirect("/sign-in");
   }
 
-const patientEmail = await decodeURIComponent(params.email);
+// const patientEmail = await decodeURIComponent(params.email);
 
-  
+  const patientEmail = decodeURIComponent(email);
   // Check if doctor is assigned to this patient
   const doctor = await prisma.doctor.findUnique({
     where: { email: doctorEmail },
