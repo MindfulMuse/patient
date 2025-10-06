@@ -79,8 +79,8 @@ interface LayoutProps {
 // export default async function Layout({ children, params }: LayoutProps) {
 //   const { email } = await params;
 
-export default function Layout({ children, params }: LayoutProps) {
-  const decodedEmail = decodeURIComponent(params.email);
+export default async function Layout({ children, params }: LayoutProps) {
+  const decodedEmail =await decodeURIComponent(params.email);
   // const decodedEmail = decodeURIComponent(email);
 
   const [menuOpen, setMenuOpen] = useState(false);
