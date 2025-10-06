@@ -62,22 +62,23 @@ import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
   
 
 
-interface LayoutProps {
-  children: ReactNode;
-  params: Promise<{
-    email: string;
-  }>;
-}
-
 // interface LayoutProps {
 //   children: ReactNode;
-//   params: {
+//   params: Promise<{
 //     email: string;
-//   };
+//   }>;
 // }
 
+interface LayoutProps {
+  children: ReactNode;
+  params: {
+    email: string;
+  };
+}
+
 export default async function Layout({ children, params }: LayoutProps) {
-  const { email } = await params;
+  // const { email } = await Promise.resolve(params);
+  const { email } =  await params;
 
 // export default  function Layout({ children, params }: LayoutProps) {
 //   const decodedEmail = decodeURIComponent(params.email);
