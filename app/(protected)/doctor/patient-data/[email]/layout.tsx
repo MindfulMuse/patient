@@ -82,7 +82,7 @@ export default async function Layout({ children, params }: LayoutProps) {
 
 // export default  function Layout({ children, params }: LayoutProps) {
 //   const decodedEmail = decodeURIComponent(params.email);
-  const decodedEmail = decodeURIComponent(email);
+  const decodedEmail = await decodeURIComponent(email);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
