@@ -10,7 +10,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { HeartPulse, Activity, Thermometer, Droplets, Stethoscope,AirVent } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { ReactNode } from "react";
 // import { getLatestVitals } from "@/lib/mqtt/mqtt";
 import { getVitals } from "@/lib/db/getvital";
 import prisma from "@/lib/db";
@@ -20,15 +20,17 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 // export default async function DoctorPatientView({
  
-// interface LayoutProps {
-//   children: ReactNode;
-//   params: {
-//     email: string;
-//   };
-// }
+interface LayoutProps {
+  children: ReactNode;
+  params: {
+    email: string;
+  };
+}
 
-export default async function DoctorPatientView({ params }: { params: { email: string } }) {
+// export default async function DoctorPatientView({ params }: { params: { email: string }) {
  
+export default async function Layout({ children, params }: LayoutProps) {
+
 
 // const { sessionClaims } = await auth();
   // const doctorEmail = sessionClaims?.email as string;
