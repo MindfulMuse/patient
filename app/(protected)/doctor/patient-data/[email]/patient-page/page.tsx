@@ -20,8 +20,17 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 // export default async function DoctorPatientView({
  
+// interface LayoutProps {
+//   children: ReactNode;
+//   params: {
+//     email: string;
+//   };
+// }
+
 export default async function DoctorPatientView({ params }: { params: { email: string } }) {
-  // const { sessionClaims } = await auth();
+ 
+
+// const { sessionClaims } = await auth();
   // const doctorEmail = sessionClaims?.email as string;
 
   const user = await currentUser();

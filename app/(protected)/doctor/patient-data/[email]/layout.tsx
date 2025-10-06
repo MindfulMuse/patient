@@ -43,6 +43,8 @@
 //   );
 // }
 
+
+//E:\Projects\patient-monitor\patient-monitor\my-app\app\(protected)\doctor\patient-data\[email]\layout.tsx
 "use client"; // Important for layout to be interactive
 
 import { ReactNode, useState } from "react";
@@ -60,16 +62,26 @@ import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
   
 
 
+// interface LayoutProps {
+//   children: ReactNode;
+//   params: Promise<{
+//     email: string;
+//   }>;
+// }
+
 interface LayoutProps {
   children: ReactNode;
-  params: Promise<{
+  params: {
     email: string;
-  }>;
+  };
 }
 
-export default async function Layout({ children, params }: LayoutProps) {
-  const { email } = await params;
-  const decodedEmail = decodeURIComponent(email);
+// export default async function Layout({ children, params }: LayoutProps) {
+//   const { email } = await params;
+
+export default function Layout({ children, params }: LayoutProps) {
+  const decodedEmail = decodeURIComponent(params.email);
+  // const decodedEmail = decodeURIComponent(email);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
