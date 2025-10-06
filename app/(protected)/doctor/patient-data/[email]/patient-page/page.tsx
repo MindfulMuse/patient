@@ -20,13 +20,19 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 // export default async function DoctorPatientView({
  
+// interface LayoutProps {
+//   children: ReactNode;
+//   params: {
+//     email: string;
+//   };
+// }
+
 interface LayoutProps {
   children: ReactNode;
-  params: {
+  params: Promise<{
     email: string;
-  };
+  }>;
 }
-
 // export default async function DoctorPatientView({ params }: { params: { email: string }) {
  
 export default async function Layout({ children, params }: LayoutProps) {
