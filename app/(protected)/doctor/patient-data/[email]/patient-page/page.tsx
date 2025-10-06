@@ -20,10 +20,17 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 // export default async function DoctorPatientView({
  
-interface LayoutProps {
-  children: ReactNode;
+// interface LayoutProps {
+//   children: ReactNode;
+//   params: {
+//     email: string;
+//   };
+// }
+
+interface PageProps {
   params: {
-    email: string;
+    // This is the Patient's email from the [email] segment of the URL
+    email: string; 
   };
 }
 
@@ -40,12 +47,15 @@ interface LayoutProps {
 //   const { email } = await Promise.resolve(params);
   // const decodedEmail = decodeURIComponent(email);
 
-  export default async function Layout({ children, params }: LayoutProps) {
+  // export default async function Layout({ children, params }: LayoutProps) {
 // const { sessionClaims } = await auth();
   // const doctorEmail = sessionClaims?.email as string;
 
-  const { email } = await Promise.resolve(params);
+  // const { email } = await Promise.resolve(params);
 
+  export default async function PatientDataPage({ params }: PageProps) {
+
+  const { email } = params; 
   const user = await currentUser();
 
   if (!user) return redirect("/sign-in");
