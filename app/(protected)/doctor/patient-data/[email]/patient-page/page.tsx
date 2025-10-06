@@ -44,6 +44,8 @@ interface LayoutProps {
 // const { sessionClaims } = await auth();
   // const doctorEmail = sessionClaims?.email as string;
 
+  const { email } = await Promise.resolve(params);
+
   const user = await currentUser();
 
   if (!user) return redirect("/sign-in");
@@ -53,9 +55,9 @@ interface LayoutProps {
     return redirect("/sign-in");
   }
 
-   const patientEmail = await decodeURIComponent(params.email);
+  //  const patientEmail = await decodeURIComponent(params.email);
 
-  // const patientEmail = decodeURIComponent(email);
+  const patientEmail = decodeURIComponent(email);
   // Check if doctor is assigned to this patient
   const doctor = await prisma.doctor.findUnique({
     where: { email: doctorEmail },
