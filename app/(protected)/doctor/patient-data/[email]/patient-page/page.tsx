@@ -35,8 +35,10 @@ interface LayoutProps {
 }
 // export default async function DoctorPatientView({ params }: { params: { email: string }) {
  
-export default async function Layout({ children, params }: LayoutProps) {
-
+export default async function Layout({ children, params }: { children: ReactNode; params: { email: string } }) {
+  // simulate async decoding
+  const { email } = await Promise.resolve(params);
+  const decodedEmail = decodeURIComponent(email);
 
 // const { sessionClaims } = await auth();
   // const doctorEmail = sessionClaims?.email as string;
