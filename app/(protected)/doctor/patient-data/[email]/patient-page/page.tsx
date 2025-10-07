@@ -27,19 +27,19 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 //   };
 // }
 
-interface PageProps {
-  params: {
-    // This is the Patient's email from the [email] segment of the URL
-    email: string; 
-  };
-}
-
-// interface LayoutProps {
-//   children: ReactNode;
-//   params: Promise<{
-//     email: string;
-//   }>;
+// interface PageProps {
+//   params: {
+//     // This is the Patient's email from the [email] segment of the URL
+//     email: string; 
+//   };
 // }
+
+interface LayoutProps {
+  children: ReactNode;
+  params: Promise<{
+    email: string;
+  }>;
+}
 // export default async function DoctorPatientView({ params }: { params: { email: string }) {
  
 // export default async function Layout({ children, params }: { children: ReactNode; params: { email: string } }) {
@@ -53,9 +53,9 @@ interface PageProps {
 
   // const { email } = await Promise.resolve(params);
 
-  export default async function PatientDataPage({ params }: PageProps) {
+  export default async function PatientDataPage({ params }: LayoutProps) {
 
-  const { email } =  params; 
+  const { email } = await params; 
   const user = await currentUser();
 
   if (!user) return redirect("/sign-in");
