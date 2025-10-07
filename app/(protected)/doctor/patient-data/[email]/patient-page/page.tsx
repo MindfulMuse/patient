@@ -55,7 +55,7 @@ interface PageProps {
 
   export default async function PatientDataPage({ params }: PageProps) {
 
-  const { email } = await params; 
+  const { email } =  params; 
   const user = await currentUser();
 
   if (!user) return redirect("/sign-in");
