@@ -86,11 +86,7 @@ interface LayoutProps {
 
 //   const [menuOpen, setMenuOpen] = useState(false);
 
-
-
-
-
-export default function PatientLayout({
+export default async function PatientLayout({
   children,
   params,
 }: {
