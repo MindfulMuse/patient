@@ -102,28 +102,19 @@ export default function PatientLayout({
 
   */
 //E:\Projects\patient-monitor\patient-monitor\my-app\app\(protected)\doctor\patient-data\[email]\layout.tsx
-// export default async function PatientLayout({
-//   children,
-//   params,
-// }: {
-//   children: ReactNode;
-//   // params: { email: string };
-//     params: Promise<{ email: string }>;
-
-// }) {
-//   // const awaitparams=await params;
-//   const { email } = await params;
-//   const decodedEmail = decodeURIComponent(email);
-
-
-
-export default function PatientLayoutClient({
-  decodedEmail,
+export default async function PatientLayout({
   children,
+  params,
 }: {
-  decodedEmail: string;
-  children: React.ReactNode;
+  children: ReactNode;
+  // params: { email: string };
+    params: Promise<{ email: string }>;
+
 }) {
+  // const awaitparams=await params;
+  const { email } = await params;
+  const decodedEmail = decodeURIComponent(email);
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
