@@ -49,6 +49,7 @@
 
 import { ReactNode, use, useState } from "react";
 import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
+import { useParams } from "next/navigation";
 
 // export default function PatientLayout({
 //   children,
@@ -87,20 +88,20 @@ interface LayoutProps {
 //   const [menuOpen, setMenuOpen] = useState(false);
 
 
-/*
-original
-export default function PatientLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: { email: string };
-}) {
-  // const awaitparams=await params;
-  const decodedEmail = decodeURIComponent(params.email);
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  */
+// original
+// export default function PatientLayout({
+//   children,
+//   params,
+// }: {
+//   children: ReactNode;
+//   params: { email: string };
+// }) {
+//   // const awaitparams=await params;
+//   const decodedEmail = decodeURIComponent(params.email);
+//   const [menuOpen, setMenuOpen] = useState(false);
+
+  
 //E:\Projects\patient-monitor\patient-monitor\my-app\app\(protected)\doctor\patient-data\[email]\layout.tsx
 // export default async function PatientLayout({
 //   children,
@@ -118,12 +119,13 @@ export default function PatientLayout({
 //   const [menuOpen, setMenuOpen] = useState(false);
 // useparams above
 
-interface PatientLayoutClientProps {
-  decodedEmail: string;
+export default function PatientLayout({
+  children,
+}: {
   children: ReactNode;
-}
-
-export default function PatientLayoutClient({ decodedEmail, children }: PatientLayoutClientProps) {
+}) {
+  const params = useParams();
+  const decodedEmail = decodeURIComponent(params.email as string);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

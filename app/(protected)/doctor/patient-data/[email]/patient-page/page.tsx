@@ -44,7 +44,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 // export default async function DoctorPatientView({ params }: { params: { email: string }) {
  
-// export default async function Layout({ children, params }: { children: ReactNode; params: { email: string } }) {
+export default async function Layout({ children, params }: { children: ReactNode; params: { email: string } }) {
 //   // simulate async decoding
 //   const { email } = await Promise.resolve(params);
   // const decodedEmail = decodeURIComponent(email);
@@ -56,15 +56,10 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
   // const { email } = await Promise.resolve(params);
 
   // export default async function PatientDataPage({ params }: PageProps) {
-
-  // const { email } = await params;
   
-  
-  interface PageProps {
-  params: Promise<{ email: string }>;
-}
 
-export default async function PatientDataPage({ params }: PageProps) {
+
+// export default async function PatientDataPage({ params }: PageProps) {
   const { email } = await params;
   const user = await currentUser();
 
