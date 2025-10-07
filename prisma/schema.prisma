@@ -271,9 +271,3 @@ enum Status {
   DORMANT
 }
 
-enum form {
-  L
-  T
-  IV
-  S
-}
