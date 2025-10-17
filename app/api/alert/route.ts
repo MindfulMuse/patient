@@ -23,6 +23,7 @@
 //   }
 // }
 
+"use client"
 
 // lib/alerts/sendBPAlert.ts
 import twilio from "twilio";

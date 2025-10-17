@@ -1,4 +1,5 @@
 // lib/twilio/twilio.ts
+"use client"
 import twilio from "twilio";
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID!;
