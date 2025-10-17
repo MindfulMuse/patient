@@ -112,10 +112,10 @@ const patient = await prisma.patient.findUnique({
   if (role === "doctor") {
     const doctor = await prisma.doctor.findUnique({
       where: { email: user.emailAddresses?.[0]?.emailAddress },
-      include: { patients: true },
+      include: { Patient: true },
     });
 
-    const isAssigned = doctor?.patients.some(p => p.email === targetEmail );
+    const isAssigned = doctor?.Patient.some(p => p.email === targetEmail );
     if (!isAssigned) {
       return <div>❌ You are not assigned to this patient.</div>;
     }
@@ -162,6 +162,8 @@ const patient = await prisma.patient.findUnique({
       activity_level: Vitaldata.activity_level,
       blood_pressure: Vitaldata.blood_pressure ?? 0,
       height: Vitaldata.height ?? 0,
+      updated_at: new Date(),
+
     },
   }).then(() => console.log("✅ Inserted vitals"))
     .catch(console.error);
