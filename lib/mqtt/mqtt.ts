@@ -207,6 +207,8 @@
 
 // lib/mqtt/mqtt.ts
 import mqtt from "mqtt";
+import { sendBPAlert } from "@/app/api/alert/route";
+
 
 interface VitalsData {
   body_temperature: number | null;
@@ -229,29 +231,44 @@ const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt", {
   clientId: "clientId-ENPYbaDKSY",
 });
 
-client.on("connect", () => {
-  console.log("✅ MQTT connected");
-  client.subscribe("sensor/vitals", (err) => {
-    if (err) console.error("❌ Subscription failed:", err);
-    else console.log("📡 Subscribed to sensor/vitals");
-  });
-});
+// client.on("connect", () => {
+//   console.log("✅ MQTT connected");
+//   client.subscribe("sensor/vitals", (err) => {
+//     if (err) console.error("❌ Subscription failed:", err);
+//     else console.log("📡 Subscribed to sensor/vitals");
+//   });
+// });
+
+// client.on("message", async (topic, message) => {
+//   console.log("📩 Received MQTT message:", message.toString());
+
+//   try {
+//     const data = JSON.parse(message.toString()) as VitalsData;
+//     latestVitals = data;
+
+//     // Instead of calling Twilio directly, trigger a server action / API call
+//     if ((data.sbp && data.sbp > 140) || (data.dbp && data.dbp > 90)) {
+//       console.log("🚨 High blood pressure detected! Triggering alert...");
+//       await fetch("/api/alerts/send", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ sbp: data.sbp, dbp: data.dbp }),
+//       });
+//     }
+//   } catch (err) {
+//     console.error("❌ MQTT error:", err);
+//   }
+// });
+
 
 client.on("message", async (topic, message) => {
-  console.log("📩 Received MQTT message:", message.toString());
-
   try {
-    const data = JSON.parse(message.toString()) as VitalsData;
+    const data = JSON.parse(message.toString());
     latestVitals = data;
 
-    // Instead of calling Twilio directly, trigger a server action / API call
     if ((data.sbp && data.sbp > 140) || (data.dbp && data.dbp > 90)) {
-      console.log("🚨 High blood pressure detected! Triggering alert...");
-      await fetch("/api/alerts/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sbp: data.sbp, dbp: data.dbp }),
-      });
+      console.log("🚨 High blood pressure detected! Sending SMS...");
+      await sendBPAlert(data.sbp, data.dbp);
     }
   } catch (err) {
     console.error("❌ MQTT error:", err);
