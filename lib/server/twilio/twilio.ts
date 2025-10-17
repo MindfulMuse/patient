@@ -1,5 +1,5 @@
-// lib/twilio/twilio.ts
-"use client"
+// E:\Projects\patient-monitor\patient-monitor\my-app\lib\server\twilio\twilio.ts
+// "use client"
 import twilio from "twilio";
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID!;
