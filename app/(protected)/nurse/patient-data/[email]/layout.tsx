@@ -47,17 +47,13 @@
 
 import { ReactNode, useState } from "react";
 import {LayoutDashboardIcon, List, Pill}  from "lucide-react";
+import { useParams } from "next/navigation";
 
-export default function PatientLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: { email: string };
-}) {
-  // const awaitparams=await params;
-  const decodedEmail = decodeURIComponent(params.email);
+export default function PatientLayout({ children }: { children: ReactNode }) {
+  const params = useParams();
+  const decodedEmail = decodeURIComponent(params.email as string);
   const [menuOpen, setMenuOpen] = useState(false);
+
 
   return (
     <div className="relative">
