@@ -207,7 +207,7 @@
 
 // lib/mqtt/mqtt.ts
 import mqtt from "mqtt";
-import { sendBPAlert } from "@/app/api/alert/route";
+import { sendBPAlert } from "@/lib/server/twilio/twilio";
 
 
 interface VitalsData {
