@@ -32,7 +32,7 @@ export default async function PatientPage({
   const NurseEmail = user.emailAddresses[0]?.emailAddress;
   if (!NurseEmail) return redirect("/sign-in");
 
-  const patientEmail = decodeURIComponent(params.email);
+  const patientEmail = decodeURIComponent(email);
 
   // Fetch nurse with assignments
   const Nurse = await prisma.nurse.findUnique({
