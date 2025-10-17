@@ -29,12 +29,11 @@ interface PatientDashboardProps {
 
 
 // const PatientDashboard = async () => {
-export default async function PatientDashboard({
-  searchParams,
-}: {
-  searchParams: { email?: string };
+export default async function PatientPage({ 
+  params 
+}: { 
+  params: Promise<{ email: string }> 
 }) {
-
   const user = await currentUser();
 
   const { data } = await getPatientDashboardStatistics(user?.id!);
@@ -86,7 +85,7 @@ export default async function PatientDashboard({
     const role = (sessionClaims?.metadata as { role?: string })?.role ?? "patient";
 
   // const emailFromQuery =  searchParams?.email;
-  const emailFromQuery = searchParams?.email ?? null;
+  const emailFromQuery = email ?? null;
 
   
 const targetEmail = role === "doctor" && emailFromQuery
