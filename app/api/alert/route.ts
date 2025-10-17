@@ -23,7 +23,9 @@
 //   }
 // }
 
-"use client"
+
+// //E:\Projects\patient-monitor\patient-monitor\my-app\app\api\alert\route.ts
+
 
 // lib/alerts/sendBPAlert.ts
 import twilio from "twilio";
