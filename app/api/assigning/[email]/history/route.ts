@@ -1,12 +1,21 @@
+//E:\Projects\my-app\app\api\assigning\[email]\history\route.ts
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 // GET /api/doctor/patient-history/[email]
+// export async function GET(
+//   req: Request,
+//   { params }: { params: { email: string } }
+// ) {
+//   const email = decodeURIComponent(params.email);
+
+
 export async function GET(
-  req: Request,
-  { params }: { params: { email: string } }
+  req: NextRequest,
+  context: { params: { email: string } }
 ) {
-  const email = decodeURIComponent(params.email);
+  const email = decodeURIComponent(context.params.email);
 
   const patient = await prisma.patient.findUnique({
     where: { email },
