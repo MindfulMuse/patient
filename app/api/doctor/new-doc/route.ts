@@ -1,7 +1,11 @@
-"use server";
+
+//E:\Projects\patient-monitor\my-app\app\api\doctor\new-doc\route.ts
+// "use server";
 
 import db from "@/lib/db";
 import { clerkClient } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
+
 
 // Transform Doctor data to match Prisma
 function transformDoctorData(doctorData: any) {
@@ -23,9 +27,16 @@ function transformDoctorData(doctorData: any) {
   };
 }
 
-// Create new Doctor
-export async function createNewDoctor(data: any, did: string) {
+
+// POST /api/doctor/new-doc
+export async function POST(req: NextRequest) {
   try {
+    const body = await req.json();
+    const { data, did } = body; // Expecting { data: {...}, did: "..." }
+
+// // Create new Doctor
+// export async function createNewDoctor(data: any, did: string) {
+//   try {
     let doctor_id = did;
     const client = await clerkClient();
 
