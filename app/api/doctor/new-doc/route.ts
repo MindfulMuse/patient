@@ -29,7 +29,7 @@ function transformDoctorData(doctorData: any) {
 
 
 // POST /api/doctor/new-doc
-export async function createNewDoctorPOST(req: NextRequest) {
+export async function createNewDoctor(req: NextRequest) {
   try {
     const body = await req.json();
     const { data, did } = body; // Expecting { data: {...}, did: "..." }
@@ -70,7 +70,7 @@ export async function createNewDoctorPOST(req: NextRequest) {
 }
 
 // Update existing Doctor
-export async function updateDoctorPUT(req: NextRequest) {
+export async function updateDoctor(req: NextRequest) {
   try {
     const body = await req.json();
     const { data, did } = body; 
