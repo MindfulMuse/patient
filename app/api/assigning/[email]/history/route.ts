@@ -11,11 +11,20 @@ import type { NextRequest } from "next/server";
 //   const email = decodeURIComponent(params.email);
 
 
-export async function GET(
+// export async function GET(
+//   req: NextRequest,
+//   context: { params: Promise<{ email: string }> } //  NEW TYPE for latest Next.js
+// ) {
+//   const { email } = await context.params; //  Must await params (since it's now async)
+
+xport async function GET(
   req: NextRequest,
-  context: { params: { email: string } }
+  { params }: { params: { email: string } } // Changed: Remove Promise wrapper
 ) {
-  const email = decodeURIComponent(context.params.email);
+  const { email } = params; // Changed: Direct access, no await needed
+  const decodedEmail = decodeURIComponent(email);
+
+// const decodedEmail = decodeURIComponent(email);
 
   const patient = await prisma.patient.findUnique({
     where: { email },
