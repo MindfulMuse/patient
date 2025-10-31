@@ -1,13 +1,19 @@
 //E:\Projects\patient monitor\patient monitor\my-app\app\api\assigning\[email]\trends\route.ts
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import prisma from "@/lib/db";
 
 interface Params {
   params: { email: string };
 }
 
-export async function GET(req: Request, { params }: Params) {
-  const { email } = await params;
+
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ email: string }> }
+) {
+  const params = await props.params;
+  const email = decodeURIComponent(params.email);
 
   if (!email) {
     return NextResponse.json({ error: "Missing email" }, { status: 400 });
