@@ -1,6 +1,6 @@
 
 //E:\Projects\patient-monitor\my-app\app\api\doctor\new-doc\route.ts
-// "use server";
+"use server";
 
 import db from "@/lib/db";
 import { clerkClient } from "@clerk/nextjs/server";
