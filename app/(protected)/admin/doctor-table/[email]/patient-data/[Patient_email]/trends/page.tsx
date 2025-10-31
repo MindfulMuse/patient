@@ -29,17 +29,31 @@ interface VitalDataPoint {
 }
 
 const vitalOptions = [
-  { key: "body_temperature", label: "Temperature (°C)" },
-  { key: "heart_rate", label: "Heart Rate (bpm)" },
-  { key: "respiratory_rate", label: "Respiratory Rate" },
-  { key: "oxygen_saturation", label: "Oxygen Saturation (%)" },
-  { key: "sbp", label: "Systolic BP" },
-  { key: "dbp", label: "Diastolic BP" },
-  { key: "si", label: "Shock Index (SI)" },
-  { key: "ri", label: "Respiratory Index (RI)" },
-  { key: "pi", label: "Perfusion Index (PI)" },
-  { key: "blood_pressure", label: "Blood Pressure (mmHg)" },
+  { key: "body_temperature", label: "Temperature (°C)", color: "#ff6384" },
+  { key: "heart_rate", label: "Heart Rate (bpm)", color: "#36a2eb" },
+  { key: "respiratory_rate", label: "Respiratory Rate", color: "#4bc0c0" },
+  { key: "oxygen_saturation", label: "Oxygen Saturation (%)", color: "#9966ff" },
+  { key: "sbp", label: "Systolic BP", color: "#ff9f40" },
+  { key: "dbp", label: "Diastolic BP", color: "#ffcd56" },
+  { key: "si", label: "Shock Index (SI)", color: "#00b894" },
+  { key: "ri", label: "Respiratory Index (RI)", color: "#0984e3" },
+  { key: "pi", label: "Perfusion Index (PI)", color: "#6c5ce7" },
+  { key: "blood_pressure", label: "Blood Pressure (mmHg)", color: "#d63031" },
 ];
+
+
+// const vitalOptions = [
+//   { key: "body_temperature", label: "Temperature (°C)" },
+//   { key: "heart_rate", label: "Heart Rate (bpm)" },
+//   { key: "respiratory_rate", label: "Respiratory Rate" },
+//   { key: "oxygen_saturation", label: "Oxygen Saturation (%)" },
+//   { key: "sbp", label: "Systolic BP" },
+//   { key: "dbp", label: "Diastolic BP" },
+//   { key: "si", label: "Shock Index (SI)" },
+//   { key: "ri", label: "Respiratory Index (RI)" },
+//   { key: "pi", label: "Perfusion Index (PI)" },
+//   { key: "blood_pressure", label: "Blood Pressure (mmHg)" },
+// ];
 
 // export default async function DoctorPatientViewTrends({
 //   params,
