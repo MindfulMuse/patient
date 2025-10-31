@@ -19,11 +19,10 @@ import type { NextRequest } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { email: string } } // Changed: Remove Promise wrapper
+  props: { params: Promise<{ email: string }> }
 ) {
-  const { email } = params; // Changed: Direct access, no await needed
-  const decodedEmail = decodeURIComponent(email);
-
+  const params = await props.params;
+  const decodedEmail = decodeURIComponent(params.email);
 // const decodedEmail = decodeURIComponent(email);
 
   const patient = await prisma.patient.findUnique({
