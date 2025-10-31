@@ -17,7 +17,7 @@ import type { NextRequest } from "next/server";
 // ) {
 //   const { email } = await context.params; //  Must await params (since it's now async)
 
-xport async function GET(
+export async function GET(
   req: NextRequest,
   { params }: { params: { email: string } } // Changed: Remove Promise wrapper
 ) {
