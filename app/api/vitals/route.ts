@@ -147,17 +147,19 @@ export async function GET() {
       patient_id: patient.id,
       // medical_id: 1, // TODO: Replace with dynamic logic
       body_temperature: vitalsdata.body_temperature ?? 0,
-        SBP: vitalsdata.SBP ?? 0,
-      DBP: vitalsdata.DBP ?? 0,
+      sbp: vitalsdata.sbp ?? 0,
+      dbp: vitalsdata.dbp ?? 0,
       heart_rate: vitalsdata.heart_rate ?? 0,
       respiratory_rate: vitalsdata.respiratory_rate,
       oxygen_saturation: vitalsdata.oxygen_saturation,
-    RI:  vitalsdata.RI??0,
-      SI: vitalsdata.SI??0,
-      PI: vitalsdata.PI??0,
+      ri:  vitalsdata.ri??0,
+      si: vitalsdata.si??0,
+      pi: vitalsdata.pi??0,
       activity_level: vitalsdata.activity_level,
       blood_pressure: vitalsdata.blood_pressure ?? 0,
       height: vitalsdata.height ?? 0,
+      updated_at: new Date()
+
     },
   });
 
