@@ -1,14 +1,23 @@
 //E:\Projects\patient monitor\my-app\app\api\assigning\[email]\records\route.ts
 
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import prisma from "@/lib/db";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { email: string } }
-) {
-  const email = decodeURIComponent(params.email);
 
+// export async function GET(
+//   req: Request,
+//   { params }: { params: { email: string } }
+// ) {
+//   const email = decodeURIComponent(params.email);
+
+
+export async function GET(
+  req: NextRequest,
+  props: { params: Promise<{ email: string }> }
+) {
+  const params = await props.params;
+  const email = decodeURIComponent(params.email);
   const patient = await prisma.patient.findUnique({
     where: { email },
     select: { id: true },

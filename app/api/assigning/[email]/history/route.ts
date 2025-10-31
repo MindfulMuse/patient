@@ -22,7 +22,7 @@ export async function GET(
   props: { params: Promise<{ email: string }> }
 ) {
   const params = await props.params;
-  const decodedEmail = decodeURIComponent(params.email);
+  const email = decodeURIComponent(params.email);
 // const decodedEmail = decodeURIComponent(email);
 
   const patient = await prisma.patient.findUnique({
