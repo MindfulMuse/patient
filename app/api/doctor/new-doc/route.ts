@@ -29,14 +29,14 @@ function transformDoctorData(doctorData: any) {
 
 
 // POST /api/doctor/new-doc
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { data, did } = body; // Expecting { data: {...}, did: "..." }
+// export async function POST(req: NextRequest) {
+//   try {
+//     const body = await req.json();
+//     const { data, did } = body; // Expecting { data: {...}, did: "..." }
 
 // // Create new Doctor
-// export async function createNewDoctor(data: any, did: string) {
-//   try {
+export async function createNewDoctor(data: any, did: string) {
+  try {
     let doctor_id = did;
     const client = await clerkClient();
 
@@ -70,10 +70,12 @@ export async function POST(req: NextRequest) {
 }
 
 // Update existing Doctor
-export async function PUT(req: NextRequest) {
+export async function updateDoctor(data: any, did: string) {
   try {
-    const body = await req.json();
-    const { data, did } = body; 
+    // const body = await req.json();
+    // const { data, did } = body; 
+
+   
     const client = await clerkClient();
     await client.users.updateUser(did, {
       firstName: data.name,
