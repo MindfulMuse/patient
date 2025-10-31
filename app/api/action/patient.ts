@@ -165,6 +165,7 @@ export async function createNewPatient(data: any, pid: string) {
        ...transformPatientData(patientData),
         // clerk_user_id: pid,
         id: patient_id,
+         updated_at: new Date(),
       },
 
       
