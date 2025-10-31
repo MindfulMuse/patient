@@ -16,7 +16,8 @@ import { Form } from "./ui/form";
 import { useForm } from "react-hook-form";
 import { CustomInput } from "./custom-input";
 import { Button } from "./ui/button";
-import { createNewDoctor, updateDoctor } from "@/app/api/doctor/new-doc/route";
+// import { createNewDoctor, updateDoctor } from "@/app/api/doctor/new-doc/route";
+import { createNewDoctor, updateDoctor } from "../lib/actions/doctor"
 import { toast } from "sonner";
 
 interface DataProps {
