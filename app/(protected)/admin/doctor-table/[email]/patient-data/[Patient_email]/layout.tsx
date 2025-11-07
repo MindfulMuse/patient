@@ -295,7 +295,10 @@ export default async function Layout({ children, params }: LayoutProps) {
 
   const doctorEmail = decodeURIComponent(email);
   const patientEmail = decodeURIComponent(Patient_email);
-  const [menuOpen, setMenuOpen] = useState(false);
+
+
+
+const [menuOpen, setMenuOpen] = useState(false);
 
   const actions = [
     {
