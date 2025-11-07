@@ -298,7 +298,6 @@
 // // export default DoctorPatientView;
 
 
-
 // Remove "use client" - this should be a SERVER component
 export const dynamic = 'force-dynamic';
 
