@@ -1,11 +1,17 @@
+//E:\Projects\patient-monitor\patient-monitor\my-app\app\(protected)\admin\appointment\page.tsx
 "use client";
 
+
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminDoctorList() {
   const [doctors, setDoctors] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const router=useRouter()
+
   const itemsPerPage = 5;
 
   useEffect(() => {
@@ -91,60 +97,55 @@ export default function AdminDoctorList() {
                   </button>
                 </td>
                
-                {/* 🔹 Actions Dropdown */}
-                <td className="px-4 py-3 flex items-center justify-end">
-                  <button
-                    id={`doctor-${doc.id}-dropdown-button`}
-                    data-dropdown-toggle={`doctor-${doc.id}-dropdown`}
-                    className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                    type="button"
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                    </svg>
-                  </button>
+              <td className="px-6 py-4 text-right">
+  <div className="relative inline-block text-left">
+    <button
+      onClick={() => setOpenDropdown(openDropdown === doc.id ? null : doc.id)}
+      className="p-2 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100"
+    >
+      <svg
+        className="w-5 h-5"
+        aria-hidden="true"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM18 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    </button>
 
-                  <div
-                    id={`doctor-${doc.id}-dropdown`}
-                    className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-                  >
-                    <ul
-                      className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                      aria-labelledby={`doctor-${doc.id}-dropdown-button`}
-                    >
-                      <li>
-                        <a
-                          href="#"
-                          className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Showc
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Edit
-                        </a>
-                      </li>
-                    </ul>
-                    <div className="py-1">
-                      <a
-                        href="#"
-                        className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      >
-                        Delete
-                      </a>
-                    </div>
-                  </div>
-                </td>
+    {openDropdown === doc.id && (
+      <div className="absolute right-0 z-10 mt-2 w-44 bg-white rounded-md shadow-lg dark:bg-gray-700">
+        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
+          <li>
+            <button
+ onClick={() => router.push(`/admin/schedule/doctor`)}
+               className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+            >
+              🕒 Edit Schedule
+            </button>
+          </li>
+          <li>
+            <button
+           onClick={() => router.push(`/admin/schedule/booking`)}
+               className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+            >
+              📅 Book Appointment
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => alert(`Delete bookings for ${doc.name}`)}
+              className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600"
+            >
+              ❌ Delete Booking
+            </button>
+          </li>
+        </ul>
+      </div>
+    )}
+  </div>
+</td>
+
 
               </tr>
             ))}

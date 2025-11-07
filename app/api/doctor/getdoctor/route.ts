@@ -1,36 +1,36 @@
-// E:\Projects\patient monitor\patient monitor\my-app\app\api\doctor\getdoctor\routes.ts
-import { NextResponse } from "next/server";
-import prisma from '@/lib/db';
+// // E:\Projects\patient monitor\patient monitor\my-app\app\api\doctor\getdoctor\routes.ts
+// import { NextResponse } from "next/server";
+// import prisma from '@/lib/db';
 
-export async function GET(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url);
-    const email = searchParams.get("email");
+// export async function GET(req: Request) {
+//   try {
+//     const { searchParams } = new URL(req.url);
+//     const email = searchParams.get("email");
 
-    if (!email) {
-      return NextResponse.json({ msg: "Email is required" }, { status: 400 });
-    }
+//     if (!email) {
+//       return NextResponse.json({ msg: "Email is required" }, { status: 400 });
+//     }
 
-    const doctor = await prisma.doctor.findUnique({
-      where: { email },
-      include: {
-        Patient: true, // optional — if you want patients included
-      },
-    });
+//     const doctor = await prisma.doctor.findUnique({
+//       where: { email },
+//       include: {
+//         Patient: true, // optional — if you want patients included
+//       },
+//     });
 
-    if (!doctor) {
-      return NextResponse.json({ msg: "Doctor not found" }, { status: 404 });
-    }
+//     if (!doctor) {
+//       return NextResponse.json({ msg: "Doctor not found" }, { status: 404 });
+//     }
 
-    return NextResponse.json({ doctor }, { status: 200 });
-  } catch (err) {
-    console.error("Error fetching doctor:", err);
-    return NextResponse.json(
-      { msg: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({ doctor }, { status: 200 });
+//   } catch (err) {
+//     console.error("Error fetching doctor:", err);
+//     return NextResponse.json(
+//       { msg: "Internal Server Error" },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 
 /*
@@ -128,3 +128,37 @@ export async function updateDoctor(data: any, did: string) {
   }
 }
  */
+
+//E:\\my-app\app\api\doctor\getdoctor\route.ts
+import { NextResponse } from "next/server";
+import prisma from "@/lib/db";
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const adminEmail = searchParams.get("email"); // email of the logged-in admin
+
+    if (!adminEmail) {
+      return NextResponse.json({ msg: "Email is required" }, { status: 400 });
+    }
+
+    // Find admin by email
+    const admin = await prisma.admin.findUnique({
+      where: { email: adminEmail },
+    });
+
+    if (!admin) {
+      return NextResponse.json({ msg: "Admin not found" }, { status: 404 });
+    }
+
+    // Get all doctors assigned to this admin
+    const doctors = await prisma.doctor.findMany({
+      where: { adminid: admin.id },
+    });
+
+    return NextResponse.json({ doctors }, { status: 200 });
+  } catch (err) {
+    console.error("Error fetching doctors:", err);
+    return NextResponse.json({ msg: "Internal Server Error" }, { status: 500 });
+  }
+}

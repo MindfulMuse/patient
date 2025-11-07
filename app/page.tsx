@@ -30,8 +30,9 @@ Welcome to <br />
 </div>
 <div className="text-center max-w-xl flex flex-col items-center justify-center">
 <p className="mb-8">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse maxime quae numquam possimus dolor. Illum, ipsam laudantium. Reprehenderit
-</p>
+Stay connected to what matters most — your wellbeing.  
+  Real-time insight, gentle awareness, and the power to act early.  
+  Because the best care starts with knowing yourself.</p>
 
 <div className="flex gap-4">
 {

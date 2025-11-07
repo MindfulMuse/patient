@@ -67,7 +67,10 @@ export async function POST(req: NextRequest) {
 
     const updatedDoctor = await prisma.doctor.update({
       where: { id: doctor.id },
-      data: { adminid },
+      data: { adminid,
+    updated_at: new Date(),
+       },
+
     });
 
     return NextResponse.json({ success: true, doctor: updatedDoctor });

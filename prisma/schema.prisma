@@ -18,6 +18,24 @@ model Admin {
   Doctor       Doctor[]
 }
 
+model Appointment {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  doctorid     String
+  patientid    String
+  date         DateTime       @db.Timestamp(6)
+  starttime    String         @db.VarChar
+  endtime      String         @db.VarChar
+  status       String         @default("BOOKED") @db.VarChar
+  created_at   DateTime       @default(now()) @db.Timestamp(6)
+  updated_at   DateTime       @default(now()) @db.Timestamp(6)
+  dphone       String?        @db.VarChar(50)
+  Doctor       Doctor         @relation(fields: [doctorid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_doctor")
+  Patient      Patient        @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_patient")
+  Prescription Prescription[]
+
+  @@unique([doctorid, date, starttime, endtime], map: "appointment_unique")
+}
+
 model Diagnosis {
   id                     Int            @id @default(autoincrement())
   patient_id             String
@@ -35,8 +53,8 @@ model Diagnosis {
 }
 
 model Doctor {
-  id                  String        @id
-  email               String        @unique
+  id                  String              @id
+  email               String              @unique
   name                String
   specialization      String
   license_number      String
@@ -45,15 +63,15 @@ model Doctor {
   department          String?
   img                 String?
   colorCode           String?
-  availability_status String?
-  type                JOBTYPE       @default(FULL)
-  created_at          DateTime      @default(now())
+  availability_status AvailabilityStatus? @default(AVAILABLE)
+  type                JOBTYPE             @default(FULL)
+  created_at          DateTime            @default(now())
   updated_at          DateTime
   Patient_email       String?
-  adminid             String?       @db.Uuid
+  adminid             String?             @db.Uuid
   Appointment         Appointment[]
   Diagnosis           Diagnosis[]
-  Admin               Admin?        @relation(fields: [adminid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_admin")
+  Admin               Admin?              @relation(fields: [adminid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_admin")
   Patient             Patient[]
   WorkingDays         WorkingDays[]
 }
@@ -85,6 +103,26 @@ model MedicalRecords {
   Diagnosis      Diagnosis[]
   LabTest        LabTest[]
   Patient        Patient     @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+}
+
+model Nurse {
+  id              String            @id @db.VarChar(255)
+  name            String            @db.VarChar(255)
+  email           String            @unique @db.VarChar(255)
+  phone           String?           @db.VarChar(50)
+  created_at      DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  NurseAssignment NurseAssignment[]
+}
+
+model NurseAssignment {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nurseid   String   @db.VarChar(255)
+  patientid String   @db.VarChar(255)
+  starttime DateTime @db.Timestamp(6)
+  endtime   DateTime @db.Timestamp(6)
+  Nurse     Nurse    @relation(fields: [nurseid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_nurse")
+  Patient   Patient  @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_patient")
 }
 
 model Patient {
@@ -129,9 +167,9 @@ model Prescription {
   patientid             String
   date                  DateTime?    @default(now()) @db.Timestamp(6)
   instructions          String?
+  appointmentid         String?      @db.Uuid
   next_appointment_date DateTime?    @db.Timestamp(6)
   next_appointment_time String?      @db.VarChar(255)
-  appointmentid         String?      @db.Uuid
   Patient               Patient      @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction)
   Appointment           Appointment? @relation(fields: [appointmentid], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_prescription_appointment")
   medication            medication[]
@@ -177,10 +215,11 @@ model WorkingDays {
   id         Int      @id @default(autoincrement())
   doctor_id  String
   day        String
-  start_time String
-  close_time String
+  start_time String?
+  close_time String?
   created_at DateTime @default(now())
   updated_at DateTime
+  is_leave   Boolean? @default(false)
   Doctor     Doctor   @relation(fields: [doctor_id], references: [id], onDelete: Cascade)
 }
 
@@ -202,42 +241,9 @@ model playing_with_neon {
   value Float? @db.Real
 }
 
-model Nurse {
-  id              String            @id @db.VarChar(255)
-  name            String            @db.VarChar(255)
-  email           String            @unique @db.VarChar(255)
-  phone           String?           @db.VarChar(50)
-  created_at      DateTime?         @default(now()) @db.Timestamp(6)
-  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
-  NurseAssignment NurseAssignment[]
-}
-
-model NurseAssignment {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nurseid   String   @db.VarChar(255)
-  patientid String   @db.VarChar(255)
-  starttime DateTime @db.Timestamp(6)
-  endtime   DateTime @db.Timestamp(6)
-  Nurse     Nurse    @relation(fields: [nurseid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_nurse")
-  Patient   Patient  @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_patient")
-}
-
-model Appointment {
-  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  doctorid     String
-  patientid    String
-  date         DateTime       @db.Timestamp(6)
-  starttime    String         @db.VarChar
-  endtime      String         @db.VarChar
-  status       String         @default("BOOKED") @db.VarChar
-  created_at   DateTime       @default(now()) @db.Timestamp(6)
-  updated_at   DateTime       @default(now()) @db.Timestamp(6)
-  dphone       String?        @db.VarChar(50)
-  Doctor       Doctor         @relation(fields: [doctorid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_doctor")
-  Patient      Patient        @relation(fields: [patientid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_appointment_patient")
-  Prescription Prescription[]
-
-  @@unique([doctorid, date, starttime, endtime], map: "appointment_unique")
+enum AvailabilityStatus {
+  AVAILABLE
+  UNAVAILABLE
 }
 
 enum Form {
@@ -270,4 +276,3 @@ enum Status {
   INACTIVE
   DORMANT
 }
-

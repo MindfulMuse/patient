@@ -139,33 +139,33 @@
 
 // delete Prescription
 // db.ts
-import prisma from "./lib/db";
+// import prisma from "./lib/db";
 
 
-async function main() {
-  const prescriptionId = 7; // <-- change as needed
+// async function main() {
+//   const prescriptionId = 7; // <-- change as needed
 
-  // delete child rows first
-  const meds = await prisma.medication.deleteMany({
-    where: { prescriptionid: prescriptionId },
-  });
+//   // delete child rows first
+//   const meds = await prisma.medication.deleteMany({
+//     where: { prescriptionid: prescriptionId },
+//   });
 
-  // then delete the parent
-  const prescription = await prisma.prescription.delete({
-    where: { id: prescriptionId },
-  });
+//   // then delete the parent
+//   const prescription = await prisma.prescription.delete({
+//     where: { id: prescriptionId },
+//   });
 
-  console.log(`Deleted ${meds.count} medication(s) and prescription #${prescription.id}`);
-}
+//   console.log(`Deleted ${meds.count} medication(s) and prescription #${prescription.id}`);
+// }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+// main()
+//   .catch((e) => {
+//     console.error(e);
+//     process.exit(1);
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });
 
 
 // //Delete VitalSigns
@@ -190,4 +190,72 @@ main()
 // }
 
 // // Call the function
-// deleteVitalSign(5);
+// deleteVitalSign(3);
+
+
+// db.ts
+// db.ts
+// import prisma from "@/lib/db";
+
+// async function migrateDoctorAvailability() {
+//   try {
+//     console.log("🚀 Updating Doctor.availability_status to enum with default...");
+
+//     // Use one command at a time (Postgres rejects multi-statements in Prisma)
+//     await prisma.$executeRawUnsafe(`
+//       ALTER TABLE "Doctor" 
+//       ALTER COLUMN availability_status DROP DEFAULT;
+//     `);
+
+//     await prisma.$executeRawUnsafe(`
+//       ALTER TABLE "Doctor" 
+//       ALTER COLUMN availability_status TYPE "AvailabilityStatus" 
+//       USING availability_status::text::"AvailabilityStatus";
+//     `);
+
+//     await prisma.$executeRawUnsafe(`
+//       ALTER TABLE "Doctor" 
+//       ALTER COLUMN availability_status SET DEFAULT 'AVAILABLE';
+//     `);
+
+//     await prisma.$executeRawUnsafe(`
+//       UPDATE "Doctor" 
+//       SET availability_status = 'AVAILABLE' 
+//       WHERE availability_status IS NULL;
+//     `);
+
+//     console.log("✅ Migration complete!");
+//   } catch (err) {
+//     console.error("❌ Error running migration:", err);
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }
+
+// migrateDoctorAvailability();
+
+
+// db-migrate.ts
+import prisma from "@/lib/db";
+
+async function main() {
+  console.log("🚀 Connecting to Neon database...");
+
+  // Make start_time and close_time nullable
+  const sql = `
+    ALTER TABLE "WorkingDays"
+    ALTER COLUMN "start_time" DROP NOT NULL,
+    ALTER COLUMN "close_time" DROP NOT NULL;
+  `;
+
+  await prisma.$executeRawUnsafe(sql);
+  console.log("✅ Made start_time and close_time nullable successfully!");
+}
+
+main()
+  .catch((err) => {
+    console.error("❌ Error running migration:", err);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

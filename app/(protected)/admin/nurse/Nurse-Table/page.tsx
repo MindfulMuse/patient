@@ -216,7 +216,8 @@ const [selectedPatientEmail, setSelectedPatientEmail] = useState('');
   }
 };
 
-  return (
+
+return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
         Assign Nurse to Patient

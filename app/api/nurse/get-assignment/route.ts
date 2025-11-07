@@ -51,6 +51,7 @@
 //   }
 // }
 
+//E:\Projects\patient-monitor\patient-monitor\my-app\app\api\nurse\get-assignment\route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
@@ -100,7 +101,22 @@ export async function GET(req: NextRequest) {
       orderBy: { starttime: 'asc' },
     });
 
-    return NextResponse.json({ success: true, assignments });
+      // Determine if the nurse is currently busy
+    const isBusy = assignments.some(
+      (a) => now >= a.starttime && now <= a.endtime
+    );
+
+       return NextResponse.json({
+      success: true,
+      nurse: {
+        id: nurse.id,
+        name: nurse.name,
+        email: nurse.email,
+        availability: isBusy ? "Busy" : "Available",
+      },
+      assignments,
+    });
+    // return NextResponse.json({ success: true, assignments });
   } catch (error) {
     console.error('get-assignments error:', error);
     return NextResponse.json(

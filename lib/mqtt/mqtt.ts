@@ -302,6 +302,8 @@ let latestVitals: VitalsData | null = null;
 
 const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt", {
   clientId: "clientId-ENPYbaDKSY",
+    // clientId: "mqtt-server-" + Math.random().toString(16).substr(2, 8),
+
 });
 
 client.on("connect", () => {

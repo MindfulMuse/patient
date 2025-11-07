@@ -55,18 +55,25 @@ export const Sidebar = async () => {
     {
       label: "MENU",
       links: [
-        {
+          {
           name: "Dashboard",
-          href: "/",
-          access: ACCESS_LEVELS_ALL,
+          href: "/patient",
+          access: ["patient"],
           icon: LayoutDashboard,
         },
-        {
-          name: "Profile",
-          href: "/patient/self",
-          access: ["patient"],
-          icon: User,
+                  {
+          name: "Patients",
+          href: "/doctor",
+          access: ["doctor"],
+          icon: UsersRound,
         },
+
+        // {
+        //   name: "Profile",
+        //   href: "/patient/self",
+        //   access: ["patient"],
+        //   icon: User,
+        // },
       ],
     },
     {
@@ -78,9 +85,10 @@ export const Sidebar = async () => {
         //   access: ["admin"],
         //   icon: Users,
         // },
+        
         {
           name: "Doctors",
-          href: "/record/doctors",
+          href: "/admin",
           access: ["admin"],
           icon: User,
         },
@@ -91,22 +99,16 @@ export const Sidebar = async () => {
           access: ["admin", "doctor"],
           icon: UserRound,
         },
-        {
-          name: "Patients",
-          href: "/doctor/doctable/table",
-          access: ["doctor"],
-          icon: UsersRound,
-        },
         // { name: "Patient List",
         //   href: "/doctor/list",
         //   access: ["doctor"],
         //   icon: Receipt,},
         {
           //E:\admin\appointment\page.tsx
-          name: "Medical Records",
-          href: "/admin/appointment",
+          name: "Appointment",
+          href: "/admin/schedule/appointment",
           access: ["admin", "nurse"],
-          icon: SquareActivity,
+          icon: CalendarCheckIcon,
         },
    
         {

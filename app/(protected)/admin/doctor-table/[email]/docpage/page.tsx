@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 
 type Patient = {
   id: number;
@@ -42,6 +43,7 @@ export default function DocPage() {
   const decodedEmail =
     typeof emailParam === 'string' ? decodeURIComponent(emailParam) : '';
 
+  
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [loading, setLoading] = useState(true);
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -57,33 +59,70 @@ const [formData, setFormData] = useState<FormDataType>({
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const router = useRouter();
-
+  
+  // const { user } = useUser();
 
   const [patient, setPatient] = useState(null);
-  
-    useEffect(() => {
-    const fetchDoctor = async () => {
-      try {
-        const res = await fetch(`/api/doctor/getdoctor?email=${decodedEmail}`);
-        const data = await res.json();
+  // const AdminEmail = user?.primaryEmailAddress?.emailAddress;
 
-        if (res.ok) {
-          setDoctor(data.doctor);
-        } else {
-          console.error(data.msg || 'Failed to fetch doctor');
-        }
-      } catch (err) {
-        console.error('Error fetching doctor:', err);
-      } finally {
-        setLoading(false);
+  //   useEffect(() => {
+  //   const fetchDoctor = async () => {
+  //     try {
+  //       const res = await fetch(`/api/doctor/getdoctor?email=${decodedEmail}`);
+  //       const data = await res.json();
+
+  //       if (res.ok) {
+  //         setDoctor(data.doctor);
+  //       } else {
+  //         console.error(data.msg || 'Failed to fetch doctor');
+  //       }
+  //     } catch (err) {
+  //       console.error('Error fetching doctor:', err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchDoctor();
+  // }, [decodedEmail]);
+
+  const { user } = useUser(); // no isLoading here
+const AdminEmail = user?.primaryEmailAddress?.emailAddress;
+
+
+useEffect(() => {
+  if (!AdminEmail) {
+    console.log("AdminEmail not ready yet", user);
+    return; // wait for user to load
+  }
+
+  console.log("Logged-in Admin Email:", AdminEmail);
+
+  const fetchDoctorByAdmin = async () => {
+    setLoading(true); // start loading
+    try {
+      const res = await fetch(`/api/doctor/getdoctor?email=${encodeURIComponent(AdminEmail)}`);
+      const data = await res.json();
+      console.log("Fetched doctors:", data);
+
+      if (res.ok && data.doctors && data.doctors.length > 0) {
+        setDoctor(data.doctors[0]);
+      } else {
+        setDoctor(null);
+        console.error("No doctor found for this admin");
       }
-    };
+    } catch (err) {
+      console.error("Error fetching doctors:", err);
+      setDoctor(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchDoctor();
-  }, [decodedEmail]);
+  fetchDoctorByAdmin();
+}, [AdminEmail, user]); 
 
 
-  
   useEffect(() => {
   const fetchPatients = async () => {
     try {
