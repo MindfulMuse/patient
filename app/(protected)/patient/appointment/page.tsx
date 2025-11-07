@@ -1,67 +1,201 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import {
+//   Table,
+//   TableHeader,
+//   TableBody,
+//   TableHead,
+//   TableRow,
+//   TableCell,
+// } from "@/components/ui/table";
+// import { Button } from "@/components/ui/button";
 
-type Medication = {
-  id: string;
-  name: string;
-  dosage: string;
-};
-
-type Prescription = {
-  id: number;
-  name: string;
-  date: string;
-  medications: Medication[];
-  next_appointment_date?: string | null; // ISO datetime string
-  next_appointment_time?: string | null;
-  instructions: string;
-};
-// type AppointmentRecord = {
+// type Medication = {
 //   id: string;
 //   name: string;
-//   date: string;
-//   next_appointment_date: string;
-//   next_appointment_time: string;
-//   instructions: string;
-//   medications: Medication[];
+//   dosage: string;
 // };
 
-export default function AppointmentTable() {
-  const [data, setData] = useState<Prescription[]>([]);
+// type Prescription = {
+//   id: number;
+//   name: string;
+//   date: string;
+//   medications: Medication[];
+//   next_appointment_date?: string | null; // ISO datetime string
+//   next_appointment_time?: string | null;
+//   instructions: string;
+// };
+// // type AppointmentRecord = {
+// //   id: string;
+// //   name: string;
+// //   date: string;
+// //   next_appointment_date: string;
+// //   next_appointment_time: string;
+// //   instructions: string;
+// //   medications: Medication[];
+// // };
+
+// export default function AppointmentTable() {
+//   const [data, setData] = useState<Prescription[]>([]);
+//   const [search, setSearch] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 5;
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const res = await fetch("/api/PI/prescribe");
+//         const json = await res.json();
+//         setData(json);
+//       } catch (error) {
+//         console.error("Failed to fetch appointments:", error);
+//       }
+//     };
+
+//     fetchData();
+//     const interval = setInterval(fetchData, 5000);
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   const filteredData = data.filter((item) =>
+//     new Date(item.date)
+//       .toLocaleString()
+//       .toLowerCase()
+//       .includes(search.toLowerCase())
+//   );
+
+//   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+//   const startIndex = (currentPage - 1) * itemsPerPage;
+//   const currentItems = filteredData.slice(startIndex, startIndex + itemsPerPage);
+
+//   const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+//   const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+
+//   if (!data.length) return <p className="p-4">No appointments available.</p>;
+
+//   return (
+//     <div className="max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-6xl mx-auto mt-8 p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+//       <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Appointments</h2>
+
+//       <input
+//         type="text"
+//         placeholder="Search by date..."
+//         value={search}
+//         onChange={(e) => {
+//           setSearch(e.target.value);
+//           setCurrentPage(1);
+//         }}
+//         className="mb-4 w-full max-w-sm"
+//       />
+
+//       <div className="overflow-x-auto">
+//         <Table className="min-w-[1200px] divide-y divide-gray-200 text-sm">
+//           <TableHeader>
+//             <TableRow>
+//               <TableHead className="px-4 py-2 text-left">Date</TableHead>
+//               <TableHead>Next Appointment Date</TableHead>
+//               <TableHead>Next Appointment Time</TableHead>
+//               <TableHead>Instructions</TableHead>
+//               {/* <TableHead>Medications</TableHead> */}
+//             </TableRow>
+//           </TableHeader>
+//           <TableBody>
+//             {currentItems.map((item) => (
+//               <TableRow key={item.id}>
+//                 <TableCell className="px-4 py-2">
+//                   {new Date(item.date).toLocaleString()}
+//                 </TableCell>
+//                 <TableCell>{item.next_appointment_date || "-"}</TableCell>
+//                 <TableCell>{item.next_appointment_time || "-"}</TableCell>
+//                 <TableCell>{item.instructions || "-"}</TableCell>
+//                 {/* <TableCell>
+//                   {item.medications.length > 0
+//                     ? item.medications.map((med) => `${med.name} (${med.dosage})`).join(", ")
+//                     : "-"}
+//                 </TableCell> */}
+//               </TableRow>
+//             ))}
+//           </TableBody>
+//         </Table>
+//       </div>
+
+//       <div className="flex items-center justify-between mt-4 text-sm text-gray-700 dark:text-gray-300">
+//         <span>
+//           Showing <strong>{startIndex + 1}</strong> to{" "}
+//           <strong>{Math.min(startIndex + itemsPerPage, filteredData.length)}</strong> of{" "}
+//           <strong>{filteredData.length}</strong> entries
+//         </span>
+//         <div className="inline-flex gap-2">
+//           <Button onClick={handlePrev} disabled={currentPage === 1} variant="secondary">
+//             Prev
+//           </Button>
+//           <Button
+//             onClick={handleNext}
+//             disabled={currentPage === totalPages || totalPages === 0}
+//             variant="secondary"
+//           >
+//             Next
+//           </Button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button"; // Replace with your Button
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useUser } from "@clerk/nextjs";
+
+type Doctor = {
+  name: string;
+};
+
+type Appointment = {
+  id: string;
+  date: string;
+  starttime: string;
+  endtime: string;
+  status: string;
+  Doctor: Doctor;
+};
+
+export default function PatientAppointments() {
+  const {user}=useUser()
+  const params = useParams();
+  // const patientEmail = decodeURIComponent(params.email as string);
+
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+    const PatientEmail = user?.primaryEmailAddress?.emailAddress;
+
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAppointments = async () => {
       try {
-        const res = await fetch("/api/PI/prescribe");
-        const json = await res.json();
-        setData(json);
-      } catch (error) {
-        console.error("Failed to fetch appointments:", error);
+        const res = await fetch(`/api/patient/appointment?email=${PatientEmail}`);
+        const data = await res.json();
+        if (res.ok) setAppointments(data.appointments);
+        else console.error(data.msg || "Failed to fetch appointments");
+      } catch (err) {
+        console.error("Error fetching appointments:", err);
+      } finally {
+        setLoading(false);
       }
     };
+    fetchAppointments();
+  }, [PatientEmail]);
 
-    fetchData();
-    const interval = setInterval(fetchData, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  if (loading) return <p>Loading...</p>;
 
-  const filteredData = data.filter((item) =>
-    new Date(item.date)
-      .toLocaleString()
-      .toLowerCase()
-      .includes(search.toLowerCase())
+  const filteredData = appointments.filter((appt) =>
+    new Date(appt.date).toLocaleDateString().includes(search)
   );
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -71,11 +205,13 @@ export default function AppointmentTable() {
   const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
   const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
-  if (!data.length) return <p className="p-4">No appointments available.</p>;
+  const getStatusColor = (dateStr: string) => (new Date(dateStr) >= new Date() ? "bg-green-100" : "bg-red-100");
+
+  if (!appointments.length) return <p className="p-4">No appointments available.</p>;
 
   return (
-    <div className="max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-6xl mx-auto mt-8 p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Appointments</h2>
+    <div className="w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-6xl mx-auto mt-8 p-4 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+      <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Patient Appointments</h2>
 
       <input
         type="text"
@@ -85,34 +221,28 @@ export default function AppointmentTable() {
           setSearch(e.target.value);
           setCurrentPage(1);
         }}
-        className="mb-4 w-full max-w-sm"
+        className="mb-4 w-full max-w-sm px-3 py-2 border rounded"
       />
 
       <div className="overflow-x-auto">
-        <Table className="min-w-[1200px] divide-y divide-gray-200 text-sm">
+        <Table className="min-w-[800px] divide-y divide-gray-200 text-sm">
           <TableHeader>
             <TableRow>
-              <TableHead className="px-4 py-2 text-left">Date</TableHead>
-              <TableHead>Next Appointment Date</TableHead>
-              <TableHead>Next Appointment Time</TableHead>
-              <TableHead>Instructions</TableHead>
-              {/* <TableHead>Medications</TableHead> */}
+              <TableHead>Doctor Name</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Start Time</TableHead>
+              <TableHead>End Time</TableHead>
+              <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentItems.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell className="px-4 py-2">
-                  {new Date(item.date).toLocaleString()}
-                </TableCell>
-                <TableCell>{item.next_appointment_date || "-"}</TableCell>
-                <TableCell>{item.next_appointment_time || "-"}</TableCell>
-                <TableCell>{item.instructions || "-"}</TableCell>
-                {/* <TableCell>
-                  {item.medications.length > 0
-                    ? item.medications.map((med) => `${med.name} (${med.dosage})`).join(", ")
-                    : "-"}
-                </TableCell> */}
+            {currentItems.map((appt) => (
+              <TableRow key={appt.id} className={`${getStatusColor(appt.date)} rounded`}>
+                <TableCell>{appt.Doctor.name}</TableCell>
+                <TableCell>{new Date(appt.date).toLocaleDateString()}</TableCell>
+                <TableCell>{appt.starttime}</TableCell>
+                <TableCell>{appt.endtime}</TableCell>
+                <TableCell>{new Date(appt.date) >= new Date() ? "Coming Up" : "Completed"}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -121,19 +251,13 @@ export default function AppointmentTable() {
 
       <div className="flex items-center justify-between mt-4 text-sm text-gray-700 dark:text-gray-300">
         <span>
-          Showing <strong>{startIndex + 1}</strong> to{" "}
-          <strong>{Math.min(startIndex + itemsPerPage, filteredData.length)}</strong> of{" "}
-          <strong>{filteredData.length}</strong> entries
+          Showing <strong>{startIndex + 1}</strong> to <strong>{Math.min(startIndex + itemsPerPage, filteredData.length)}</strong> of <strong>{filteredData.length}</strong> entries
         </span>
         <div className="inline-flex gap-2">
           <Button onClick={handlePrev} disabled={currentPage === 1} variant="secondary">
             Prev
           </Button>
-          <Button
-            onClick={handleNext}
-            disabled={currentPage === totalPages || totalPages === 0}
-            variant="secondary"
-          >
+          <Button onClick={handleNext} disabled={currentPage === totalPages || totalPages === 0} variant="secondary">
             Next
           </Button>
         </div>

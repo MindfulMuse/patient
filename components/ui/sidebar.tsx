@@ -67,7 +67,14 @@ export const Sidebar = async () => {
           access: ["doctor"],
           icon: UsersRound,
         },
+        // E:\my-app\app\(protected)\doctor\appointment\page.tsx
 
+         {
+          name: "Appointment",
+          href: "/doctor/appointment",
+          access: ["doctor"],
+          icon: UsersRound,
+        },
         // {
         //   name: "Profile",
         //   href: "/patient/self",
@@ -89,8 +96,8 @@ export const Sidebar = async () => {
         {
           name: "Doctors",
           href: "/admin",
-          access: ["admin"],
-          icon: User,
+          access: ["Doctor"],
+          icon: CalendarCheckIcon,
         },
         {
           //E:\Projects\patient monitor\patient monitor\my-app\app\(protected)\admin\nurse\Nurse-Table\page.tsx
@@ -110,6 +117,7 @@ export const Sidebar = async () => {
           access: ["admin", "nurse"],
           icon: CalendarCheckIcon,
         },
+        
    
         {
           name: "Patient Management",

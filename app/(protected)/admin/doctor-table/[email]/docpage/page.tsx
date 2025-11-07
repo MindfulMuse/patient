@@ -215,8 +215,9 @@ useEffect(() => {
 const handleView = (patient: Patient) => {
   const encodedEmail = encodeURIComponent(patient.email); // assuming you use email in query
   // router.push(`/patient?email=${encodedEmail}`);
+//E:\Projects\patient-monitor\patient)\doctor\patient-data\[email]\patient-page
   //E:\admin\doctor-table\[email]\patient-data\[Patient_email]\patient-page\page.tsx
-router.push(`/admin/doctor-table/${encodeURIComponent(decodedEmail)}/patient-data/${encodeURIComponent(patient.email)}/patient-page`);
+router.push(`/doctor/patient-data/${encodeURIComponent(patient.email)}/patient-page`);
 };
 
   const filteredPatients = patients.filter((p) =>
