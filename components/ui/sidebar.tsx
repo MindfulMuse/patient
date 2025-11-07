@@ -67,7 +67,7 @@ export const Sidebar = async () => {
           access: ["doctor"],
           icon: UsersRound,
         },
-        // E:\my-app\app\(protected)\doctor\appointment\page.tsx
+        // E:\my-app\app\\\\(protected)\doctor\appointment\page.tsx
 
          {
           name: "Appointment",
