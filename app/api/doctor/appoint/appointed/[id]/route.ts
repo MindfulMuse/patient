@@ -6,9 +6,14 @@ interface Params {
   id: string;
 }
 
-export async function DELETE(req: Request, { params }: { params: Params }) {
+export async function DELETE(
+  req: Request,
+  context: { params: Promise<Params> }
+) {
   try {
-    const { id } = params;
+    // ✅ Await the params to ensure correct typing
+    const { id } = await context.params;
+
 
     const deleted = await prisma.workingDays.delete({
       where: { id: Number(id) },
