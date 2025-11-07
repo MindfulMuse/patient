@@ -2,15 +2,32 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
+// interface Params {
+//   params: { email: string };
+// }
+
+
 interface Params {
-  params: { email: string };
+  email: string; // Can be doctor email or ID for deletion
 }
 
 // Get all working days for a doctor (by email)
-export async function GET(_req: Request, { params }: Params) {
+// export async function GET(_req: Request, { params }: Params) {
+
+
+// Get all working days for a doctor (by email)
+
+// Get all working days for a doctor (by email)
+export async function GET(
+  _req: Request,
+  context: { params: Promise<Params> }
+) {
   try {
+    // ✅ Await the params
+    const { email } = await context.params;
+
     const doctor = await prisma.doctor.findUnique({
-      where: { email: params.email },
+      where: { email },
     });
 
     if (!doctor) {
@@ -30,11 +47,19 @@ export async function GET(_req: Request, { params }: Params) {
 }
 
 //  Delete a specific working-day record by its ID
-export async function DELETE(_req: Request, { params }: Params) {
+// export async function DELETE(_req: Request, { params }: Params) {
+//   try {
+
+// Delete a specific working-day record by its ID
+export async function DELETE(
+  _req: Request,
+  context: { params: Promise<Params> }
+) {
   try {
+    // ✅ Await the params
+    const { email } = await context.params;
     // Here, params.doctorEmail will actually be a numeric ID (e.g., /api/working-days/12)
-    const id = parseInt(params.email, 10);
-    if (isNaN(id)) {
+    const id = parseInt(email, 10);     if (isNaN(id)) {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     }
 
