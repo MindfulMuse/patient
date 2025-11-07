@@ -281,25 +281,21 @@
 import { ReactNode, useState, useEffect } from "react";
 import { LayoutDashboardIcon, List, Pill } from "lucide-react";
 
+
 interface LayoutProps {
   children: ReactNode;
-  params: {
+  params: Promise<{
     email: string;
     Patient_email: string;
-  };
+  }>;
 }
 
-export default function Layout({ children, params }: LayoutProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [doctorEmail, setDoctorEmail] = useState("");
-  const [patientEmail, setPatientEmail] = useState("");
+export default async function Layout({ children, params }: LayoutProps) {
+  const { email, Patient_email } = await params;
 
-  // Decode params on mount
-  useEffect(() => {
-    setDoctorEmail(decodeURIComponent(params.email));
-    setPatientEmail(decodeURIComponent(params.Patient_email));
-    console.log("doctmail", params.email, "patient", params.Patient_email);
-  }, [params]);
+  const doctorEmail = decodeURIComponent(email);
+  const patientEmail = decodeURIComponent(Patient_email);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const actions = [
     {
