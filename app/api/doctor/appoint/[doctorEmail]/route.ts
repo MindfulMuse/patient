@@ -10,10 +10,13 @@ interface Params {
 
 export async function GET(
   req: Request,
-  context: { params: Params }
+  context: { params: Promise<{ email: string }> }
 ) {
   try {
-    const { doctorEmail } = context.params;
+    // ✅ Await params to avoid Next.js warning
+    const { email } = await context.params;
+    const doctorEmail = decodeURIComponent(email);
+
 
     // Find doctor
     const doctor = await prisma.doctor.findUnique({
