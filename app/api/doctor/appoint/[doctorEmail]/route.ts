@@ -7,9 +7,13 @@ interface Params {
   doctorEmail: string;
 }
 
-export async function GET(req: Request, { params }: { params: Params }) {
+
+export async function GET(
+  req: Request,
+  context: { params: Params }
+) {
   try {
-    const { doctorEmail } = params;
+    const { doctorEmail } = context.params;
 
     // Find doctor
     const doctor = await prisma.doctor.findUnique({
