@@ -1,6 +1,6 @@
-// import { PrismaClient } from "../lib/generated/prisma";  // Adjust this path as needed
+import { PrismaClient } from "../lib/generated/prisma";  // Adjust this path as needed
 
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
   return new PrismaClient();
