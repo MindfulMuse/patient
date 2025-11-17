@@ -1,5 +1,5 @@
 // // D:\Projects\demo-app\patient monitor\my-app\app\(protected)\admin\patient-data\[email]\patient page\page.tsx
-"use client"
+// "use client"
 // export const dynamic = 'force-dynamic';
 
 // import { useParams } from "next/navigation";
