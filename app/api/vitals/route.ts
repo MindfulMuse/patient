@@ -42,7 +42,7 @@
 
 //     console.log("✅ Vital saved");
 //   } catch (err) {
-//     console.error("❌ MQTT error:", err);
+//     console.error(" MQTT error:", err);
 //   }
 // });
 
