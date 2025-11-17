@@ -46,6 +46,8 @@
 //       },
 //     });
 
+
+// #try and catch block 
 //     return { success: true, error: false, msg: "Patient created successfully" };
 //   } catch (error: any) {
 //     console.error(error);
