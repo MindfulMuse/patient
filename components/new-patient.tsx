@@ -345,7 +345,7 @@ import { date, z } from "zod";
 import { CustomInput } from "./custom-input";
 import { GENDER, MARITAL_STATUS, RELATION } from "@/lib";
 import { Button } from "./ui/button";
-import { createNewPatient, updatePatient } from "@/app/api/action/patient";
+import { createNewPatient, updatePatient } from "@/app/api/action/route";
 import { toast } from "sonner";
 import { auth } from "@clerk/nextjs/server";
 
