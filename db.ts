@@ -189,72 +189,29 @@
 //   }
 // }
 
-// // Call the function
-// deleteVitalSign(3);
+// // // Call the function
+// deleteVitalSign(5);
 
 
-// db.ts
-// db.ts
-// import prisma from "@/lib/db";
 
-// async function migrateDoctorAvailability() {
-//   try {
-//     console.log("🚀 Updating Doctor.availability_status to enum with default...");
-
-//     // Use one command at a time (Postgres rejects multi-statements in Prisma)
-//     await prisma.$executeRawUnsafe(`
-//       ALTER TABLE "Doctor" 
-//       ALTER COLUMN availability_status DROP DEFAULT;
-//     `);
-
-//     await prisma.$executeRawUnsafe(`
-//       ALTER TABLE "Doctor" 
-//       ALTER COLUMN availability_status TYPE "AvailabilityStatus" 
-//       USING availability_status::text::"AvailabilityStatus";
-//     `);
-
-//     await prisma.$executeRawUnsafe(`
-//       ALTER TABLE "Doctor" 
-//       ALTER COLUMN availability_status SET DEFAULT 'AVAILABLE';
-//     `);
-
-//     await prisma.$executeRawUnsafe(`
-//       UPDATE "Doctor" 
-//       SET availability_status = 'AVAILABLE' 
-//       WHERE availability_status IS NULL;
-//     `);
-
-//     console.log("✅ Migration complete!");
-//   } catch (err) {
-//     console.error("❌ Error running migration:", err);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// }
-
-// migrateDoctorAvailability();
-
-
-// db-migrate.ts
 import prisma from "@/lib/db";
 
 async function main() {
-  console.log("🚀 Connecting to Neon database...");
+  console.log("🚀 Adding clerkId column to Doctor table...");
 
-  // Make start_time and close_time nullable
   const sql = `
-    ALTER TABLE "WorkingDays"
-    ALTER COLUMN "start_time" DROP NOT NULL,
-    ALTER COLUMN "close_time" DROP NOT NULL;
+    ALTER TABLE "Admin"
+    ADD COLUMN "clerkId" TEXT UNIQUE;
   `;
 
   await prisma.$executeRawUnsafe(sql);
-  console.log("✅ Made start_time and close_time nullable successfully!");
+
+  console.log("✅ clerkId column added successfully!");
 }
 
 main()
   .catch((err) => {
-    console.error("❌ Error running migration:", err);
+    console.error("❌ Error:", err);
   })
   .finally(async () => {
     await prisma.$disconnect();

@@ -86,6 +86,7 @@ export async function GET(
       where: { patientid: patient.id },
       include: { medication: true },
       orderBy: { date: "desc" },
+      
     });
 
     if (prescriptions.length === 0) {

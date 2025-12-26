@@ -15,6 +15,7 @@ model Admin {
   hospitalname String?
   created_at   DateTime? @default(now()) @db.Timestamp(6)
   updated_at   DateTime? @default(now()) @db.Timestamp(6)
+  clerkId      String?   @unique
   Doctor       Doctor[]
 }
 
@@ -69,6 +70,7 @@ model Doctor {
   updated_at          DateTime
   Patient_email       String?
   adminid             String?             @db.Uuid
+  clerkId             String?             @unique
   Appointment         Appointment[]
   Diagnosis           Diagnosis[]
   Admin               Admin?              @relation(fields: [adminid], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_admin")

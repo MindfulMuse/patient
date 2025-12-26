@@ -6,6 +6,7 @@ import {
   CalendarCheckIcon,
   GitGraphIcon,
   LayoutDashboard,
+  LayoutDashboardIcon,
   Library,
   List,
   ListOrdered,
@@ -19,6 +20,7 @@ import {
   User,
   UserRound,
   Users,
+  Users2Icon,
   UsersRound,
 } from "lucide-react";
 import Link from "next/link";
@@ -62,24 +64,19 @@ export const Sidebar = async () => {
           icon: LayoutDashboard,
         },
                   {
-          name: "Patients",
+          name: "Dashboard",
           href: "/doctor",
           access: ["doctor"],
-          icon: UsersRound,
+          icon: LayoutDashboardIcon,
         },
         // E:\my-app\app\\(protected)\doctor\appointment\page.tsx
 
-         {
-          name: "Appointment",
-          href: "/doctor/appointment",
-          access: ["doctor"],
-          icon: UsersRound,
-        },
+       
         {
-          name: "Doctors",
+          name: "Dashboard",
           href: "/admin",
-          access: ["Admin"],
-          icon: UsersRound,
+          access: ["admin"],
+          icon: LayoutDashboardIcon,
         },
         // {
         //   name: "Profile",
@@ -99,18 +96,25 @@ export const Sidebar = async () => {
         //   icon: Users,
         // },
         
-        {
-          name: "Doctors",
-          href: "/admin",
-          access: ["Doctor"],
+      
+          {
+          name: "Appointment",
+          href: "/doctor/appointment",
+          access: ["doctor"],
           icon: CalendarCheckIcon,
         },
         {
           //E:\Projects\patient monitor\patient monitor\my-app\app\(protected)\admin\nurse\Nurse-Table\page.tsx
           name: "Staffs",
           href: "/admin/nurse",
-          access: ["admin", "doctor"],
+          access: ["admin"],
           icon: UserRound,
+        },
+         {
+          name: "Patients",
+          href: "/doctor",
+          access: ["doctor"],
+          icon: Users2Icon,
         },
         // { name: "Patient List",
         //   href: "/doctor/list",

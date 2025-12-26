@@ -100,7 +100,7 @@ const filteredData = data.filter((item) =>
               <TableHead className="px-4 py-2 text-left">Date</TableHead>
               <TableHead>Next Appointment Date</TableHead>
               <TableHead>Next Appointment Time</TableHead>
-              <TableHead>Instructions</TableHead>
+              <TableHead>Doctor Name</TableHead>
               {/* <TableHead>Medications</TableHead> */}
             </TableRow>
           </TableHeader>
