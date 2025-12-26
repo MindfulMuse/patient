@@ -55,8 +55,8 @@
 //   }
 // }
 
-//E:\Projects\patient monitor\my-app\app\api\action\patient.ts
-"use server";
+//E:\Projects\patient monitor\my-app\app\api\action\route.ts
+// "use server";
 
 import db from "@/lib/db";
 import { PatientFormSchema } from "@/lib/schema";
