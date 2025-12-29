@@ -218,7 +218,6 @@ const handleView = (patient: Patient) => {
 //E:\Projects\patient-monitor\patient)\doctor\patient-data\[email]\patient-page
   //E:\admin\doctor-table\[email]\patient-data\[Patient_email]\patient-page\page.tsx
 router.push(`/doctor/patient-data/${encodeURIComponent(patient.email)}/patient-page`);
-// router.push(`/admin/doctor-table/${encodeURIComponent(decodedEmail)}/patient-data/${encodeURIComponent(patient.email)}/patient-page`);
 
 };
 
