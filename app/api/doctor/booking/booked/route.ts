@@ -174,6 +174,7 @@
 //   }
 // }
 
+//E:\Projects\patient-monitor\patient-monitor\my-app\app\api\doctor\booking\booked\route.ts
 
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";

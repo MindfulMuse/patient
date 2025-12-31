@@ -79,6 +79,13 @@ export default async function PatientPage({
 
   const patientEmail = decodeURIComponent(email);
   // Check if doctor is assigned to this patient
+  
+  const userRole = user.publicMetadata?.role as string;
+
+  // If user is admin, allow access
+  if (userRole === "admin") {
+    // Admin has full access, skip assignment check
+  } else if (userRole === "doctor") {
   const doctor = await prisma.doctor.findUnique({
     where: { email: doctorEmail },
     include: { Patient: true },
@@ -88,7 +95,7 @@ export default async function PatientPage({
 
   if (!isAssigned) {
     return <div>❌ You are not assigned to this patient.</div>;
-  }
+  }}
 
   const patient = await prisma.patient.findUnique({
     where: { email: patientEmail },

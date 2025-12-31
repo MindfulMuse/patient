@@ -168,51 +168,51 @@
 //   });
 
 
-// //Delete VitalSigns
+//Delete VitalSigns
 
-// import prisma from '@/lib/db';
+import prisma from '@/lib/db';
 
-// async function deleteVitalSign(vitalSignId: number) {
-//   try {
-//     await prisma.vitalSigns.delete({
-//       where: { id: vitalSignId },
-//     });
-//     console.log('✅ VitalSigns deleted successfully');
-//   } catch (err: any) {
-//     if (err.code === 'P2025') {
-//       console.error('❌ VitalSigns with this ID not found');
-//     } else {
-//       console.error('❌ Error deleting VitalSigns:', err);
-//     }
-//   } finally {
-//     await prisma.$disconnect(); // close DB connection
-//   }
-// }
-
-// // // Call the function
-// deleteVitalSign(5);
-
-
-
-import prisma from "@/lib/db";
-
-async function main() {
-  console.log("🚀 Adding clerkId column to Doctor table...");
-
-  const sql = `
-    ALTER TABLE "Admin"
-    ADD COLUMN "clerkId" TEXT UNIQUE;
-  `;
-
-  await prisma.$executeRawUnsafe(sql);
-
-  console.log("✅ clerkId column added successfully!");
+async function deleteVitalSign(vitalSignId: number) {
+  try {
+    await prisma.vitalSigns.delete({
+      where: { id: vitalSignId },
+    });
+    console.log('✅ VitalSigns deleted successfully');
+  } catch (err: any) {
+    if (err.code === 'P2025') {
+      console.error('❌ VitalSigns with this ID not found');
+    } else {
+      console.error('❌ Error deleting VitalSigns:', err);
+    }
+  } finally {
+    await prisma.$disconnect(); // close DB connection
+  }
 }
 
-main()
-  .catch((err) => {
-    console.error("❌ Error:", err);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+// // Call the function
+deleteVitalSign(9);
+
+
+
+// import prisma from "@/lib/db";
+
+// async function main() {
+//   console.log("🚀 Adding clerkId column to Doctor table...");
+
+//   const sql = `
+//     ALTER TABLE "Admin"
+//     ADD COLUMN "clerkId" TEXT UNIQUE;
+//   `;
+
+//   await prisma.$executeRawUnsafe(sql);
+
+//   console.log("✅ clerkId column added successfully!");
+// }
+
+// main()
+//   .catch((err) => {
+//     console.error("❌ Error:", err);
+//   })
+//   .finally(async () => {
+//     await prisma.$disconnect();
+//   });
