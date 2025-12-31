@@ -99,7 +99,7 @@ useEffect(() => {
   console.log("Logged-in Admin Email:", AdminEmail);
 
   const fetchDoctorByAdmin = async () => {
-    setLoading(true); // start loading
+    setLoading(true); 
     try {
       const res = await fetch(`/api/doctor/getdoctor?email=${encodeURIComponent(AdminEmail)}`);
       const data = await res.json();
